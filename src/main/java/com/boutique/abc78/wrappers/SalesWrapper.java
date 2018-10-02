@@ -9,8 +9,6 @@ import java.util.List;
 public class SalesWrapper {
 
     public Sale sale;
-    public Float totalDiscount;
-
 
     public Sale getSale() {
         return sale;

@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -32,6 +29,23 @@ public class SaleController {
         List<Customer> allCustomers = customerService.getAllCustomers();
         model.addAttribute("customerList",allCustomers);
         model.addAttribute("sale", new Sale());
+        return  "sale";
+    }
+
+    @RequestMapping("/list")
+    public String getAllSales(Model model){
+        List<Sale> allSales = saleService.getAllSales();
+        model.addAttribute("saleList", allSales);
+        return  "sale_list";
+    }
+
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+    public String show(@PathVariable("id") Integer id,Model model){
+        Sale sale = saleService.getSale(id);
+        List<Customer> allCustomers = customerService.getAllCustomers();
+        model.addAttribute("customerList",allCustomers);
+        model.addAttribute("sale", sale);
+        model.addAttribute("saleId", id);
         return  "sale";
     }
 

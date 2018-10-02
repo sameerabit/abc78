@@ -6,10 +6,7 @@ import com.boutique.abc78.service.SaleService;
 import com.boutique.abc78.wrappers.SalesWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -22,10 +19,24 @@ public class SalesRestController {
 
     @RequestMapping(value="/save", method=RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String store(@RequestBody SalesWrapper salesWrapper){
+        float total = 0;
+        float discount = 0;
+        if(salesWrapper.getSale().getId() != null){
+            saleService.removeSaleOrderDetails(salesWrapper.sale.getId());
+        }
         for (SaleOrderDetail saleOrderDetail: salesWrapper.getSale().getSaleOrderDetail()) {
             saleOrderDetail.setSale(salesWrapper.getSale());
+            total += saleOrderDetail.getTotal();
         }
+        salesWrapper.getSale().setTotal(total);
         saleService.save(salesWrapper.sale);
         return "sale";
+    }
+
+    @RequestMapping(value="/show", method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public Sale show(@RequestParam Integer sale){
+        Sale saleObj = saleService.getSale(sale);
+        return saleObj;
     }
 }

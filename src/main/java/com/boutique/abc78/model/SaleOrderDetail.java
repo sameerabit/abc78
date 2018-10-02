@@ -1,5 +1,7 @@
 package com.boutique.abc78.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ public class SaleOrderDetail {
     private Integer id;
 
     @ManyToOne(targetEntity = Sale.class)
+    @JsonIgnore
     private Sale sale;
 
     @ManyToOne(targetEntity = Item.class)

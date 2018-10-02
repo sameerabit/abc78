@@ -4,16 +4,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <head>
-        <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
-        <script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
-        <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="/webjars/jquery-ui/1.12.1/jquery-ui.css">
+    <%--<head>--%>
+    <%--<script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>--%>
+    <%--<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>--%>
+    <%--<script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>--%>
+    <%--<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css">--%>
+    <%--<link rel="stylesheet" type="text/css" href="/webjars/jquery-ui/1.12.1/jquery-ui.css">--%>
 
-        <link rel="stylesheet" href="/webjars/datatables/1.10.12/media/css/jquery.dataTables.min.css">
-        <script src="/webjars/datatables/1.10.12/media/js/jquery.dataTables.min.js"></script>
-    </head>
+    <%--<link rel="stylesheet" href="/webjars/datatables/1.10.12/media/css/jquery.dataTables.min.css">--%>
+    <%--<script src="/webjars/datatables/1.10.12/media/js/jquery.dataTables.min.js"></script>--%>
+    <%--</head>--%>
     <style type="text/css">
         div.container {
             width: 70%;
@@ -125,6 +125,7 @@
                     price * (discount / 100) * qty,
                     price * qty * (1 - (discount / 100)),
                     itemId,
+                    "",
                 ]).draw(false);
                 item = $('#item').val("");
                 price = $('#price').val("");
@@ -152,9 +153,38 @@
                         "targets": [5],
                         "visible": false,
                         "searchable": false
+                    },
+                    {
+                        "targets": [6],
+                        "visible": false,
+                        "searchable": false
                     }
                 ]
             });
+
+
+            var saleId = $('#saleId').val();
+            if (saleId != "") {
+                $.ajax({
+                    url: "/api/sale/show",
+                    data: {sale: saleId},
+                    success: function (sale) {
+                        $("#orderDate").datepicker("setDate", new Date(sale.orderDate));
+                        $('#totalDiscount').val(sale.totalDiscount);
+                        sale.saleOrderDetail.forEach(function (row) {
+                            table.row.add([
+                                row.item.name,
+                                row.price,
+                                row.quantity,
+                                row.discount,
+                                row.total,
+                                row.item.id,
+                                row.id,
+                            ]).draw(false);
+                        });
+                    },
+                });
+            }
 
             $('#employeesTable tbody').on('click', 'tr', function () {
                 var rowData = table.row(this).data();
@@ -194,15 +224,17 @@
                 var saleTableData = table.data().toArray();
                 formattedData = formatData(saleTableData);
                 totalDiscount = $('#totalDiscount').val();
+                saleId = $('#saleId').val();
                 customer = $('#customer').val();
                 orderDate = $('#orderDate').val();
                 var postdata = {};
-                postdata.totalDiscount = totalDiscount;
                 postdata.sale = {
+                    id: saleId,
                     customer: {
                         id: customer
                     },
                     orderDate: orderDate,
+                    totalDiscount : parseFloat(totalDiscount),
                     saleOrderDetail: formattedData
                 };
                 $.ajax({
@@ -250,20 +282,21 @@
 </div>
 <div class="container">
     <form:form method="POST" action="/sale/save" modelAttribute="sale">
-            <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="customer">Customer:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="customer_name"/>
-                    <form:input type="hidden" class="form-control" id="customer" path="customer.id"/>
-                </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="customer">Customer:</label>
+            <div class="col-sm-10">
+                <form:input type="text" class="form-control" id="customer_name" path="customer.name"/>
+                <form:input type="hidden" class="form-control" id="customer" path="customer.id"/>
+                <form:input type="hidden" class="form-control" id="saleId" path="id"/>
             </div>
-            <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="orderDate">Date:</label>
-                    <fmt:formatDate type="text" value="${sale.orderDate}" var="orderDate"/>
-                <div class="col-sm-10">
-                    <form:input id="orderDate" class="datepicker form-control" path="orderDate" value="${orderDate}"/>
-                </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="orderDate">Date:</label>
+            <fmt:formatDate type="date" value="${sale.orderDate}" var="orderDate"/>
+            <div class="col-sm-10">
+                <form:input id="orderDate" class="datepicker form-control" path="orderDate"/>
             </div>
+        </div>
         <div style="float: right;margin-bottom: 10px;">
             <input type="button" id="addRow" class="btn btn-primary" value="Add Row"/>
             <input type="button" class="btn btn-primary" id="saveButton" value="Submit"/>
@@ -279,6 +312,7 @@
             <th>Discount</th>
             <th class="sum">Total</th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tfoot>
@@ -288,6 +322,7 @@
             <th id="discountedPrice">0.00</th>
             <th style="text-align:right">Total</th>
             <th id="total"></th>
+            <th></th>
             <th></th>
         </tr>
         </tfoot>

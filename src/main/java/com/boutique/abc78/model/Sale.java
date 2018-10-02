@@ -19,7 +19,11 @@ public class Sale {
     @DateTimeFormat(pattern = "yy/mm/dd")
     private Date orderDate;
 
-    @OneToMany(mappedBy = "sale",fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    private float totalDiscount;
+
+    private float total;
+
+    @OneToMany(mappedBy = "sale",orphanRemoval=true,fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<SaleOrderDetail> saleOrderDetail;
 
     private String status;
@@ -62,6 +66,22 @@ public class Sale {
 
     public void setSaleOrderDetail(List<SaleOrderDetail> saleOrderDetail) {
         this.saleOrderDetail = saleOrderDetail;
+    }
+
+    public float getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public void setTotalDiscount(float totalDiscount) {
+        this.totalDiscount = totalDiscount;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
     }
 
     @Override
