@@ -3,7 +3,7 @@ package com.boutique.abc78.model;
 import javax.persistence.*;
 
 @Entity
-class ItemCategory {
+public class ItemCategory{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

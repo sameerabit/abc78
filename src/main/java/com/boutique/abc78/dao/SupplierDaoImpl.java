@@ -1,6 +1,6 @@
 package com.boutique.abc78.dao;
 
-import com.boutique.abc78.model.Item;
+import com.boutique.abc78.model.Supplier;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -10,7 +10,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Service
-public class ItemDaoImpl implements ItemDao {
+public class SupplierDaoImpl implements SupplierDao {
 
     private EntityManagerFactory entityManagerFactory;
 
@@ -21,37 +21,36 @@ public class ItemDaoImpl implements ItemDao {
 
 
     @Override
-    public List<Item> getAllItems() {
+    public List<Supplier> getAllSuppliers() {
         EntityManager em = entityManagerFactory.createEntityManager();
-        List<Item> itemList = em.createQuery("SELECT c FROM Item c").getResultList();
-        return itemList;
+        List<Supplier> supplierList = em.createQuery("SELECT s FROM Supplier s").getResultList();
+        return supplierList;
     }
 
     @Override
-    public List<Item> getItemByNameLike(String name) {
+    public List<Supplier> getSupplierByNameLike(String name) {
         EntityManager em = entityManagerFactory.createEntityManager();
-        Query query = em.createQuery("SELECT c FROM Item c where c.name LIKE :name");
+        Query query = em.createQuery("SELECT s FROM Supplier s where s.name LIKE :name");
         query.setParameter("name", "%" + name + "%");
-        List<Item> itemList = query.getResultList();
-        return itemList;
+        List<Supplier> supplierList = query.getResultList();
+        return supplierList;
     }
 
     @Override
-    public Item save(Item item) {
+    public Supplier save(Supplier supplier) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-        em.persist(item);
+        em.persist(supplier);
         em.getTransaction().commit();
-        return item;
+        return supplier;
     }
 
     @Override
-    public Item getItemById(int itemId) {
+    public Supplier getSupplierById(int supplierId) {
         EntityManager em = entityManagerFactory.createEntityManager();
-        Query query = em.createQuery("SELECT c FROM Item c where c.id = :id");
-        query.setParameter("id", itemId );
-        Item item = (Item) query.getSingleResult();
-        return item;
+        Query query = em.createQuery("SELECT c FROM Supplier c where c.id = :id");
+        query.setParameter("id", supplierId );
+        Supplier supplier = (Supplier) query.getSingleResult();
+        return supplier;
     }
-
 }

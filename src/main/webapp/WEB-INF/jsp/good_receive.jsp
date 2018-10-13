@@ -14,6 +14,11 @@
             width: 300px !important;
             height: 35px !important;
         }
+
+        .alert{
+            display: none;
+        }
+
     </style>
     <script>
 
@@ -42,10 +47,10 @@
             });
 
             $(".datepicker").datepicker();
-            $('#customer_name').autocomplete({
+            $('#supplier_name').autocomplete({
                 source: function (request, response) {
                     $.ajax({
-                        url: "/customer/getCustomersByNameLike",
+                        url: "/supplier/getSuppliersByNameLike",
                         data: {
                             name: request.term
                         },
@@ -59,8 +64,8 @@
                 minLength: 1,
                 select: function (event, ui) {
                     event.preventDefault();
-                    $('#customer').val(ui.item.value);
-                    $('#customer_name').val(ui.item.label);
+                    $('#supplier').val(ui.item.value);
+                    $('#supplier_name').val(ui.item.label);
                 }
             });
 
@@ -74,11 +79,11 @@
                         dataType: 'json',
                         success: function (data) {
                             var autoCompleteList = [];
-                            var saleTableData = table.data().toArray();
-                            if (saleTableData.length != 0) {
-                                saleTableData.forEach(function (sale) {
+                            var goodReceiveNoteTableData = table.data().toArray();
+                            if (goodReceiveNoteTableData.length != 0) {
+                                goodReceiveNoteTableData.forEach(function (goodReceiveNote) {
                                     data.forEach(function (row, index) {
-                                        if (row.value == sale[5]) {
+                                        if (row.value == goodReceiveNote[4]) {
                                             delete data[index];
                                         }
                                     });
@@ -106,21 +111,18 @@
                 item = $('#item').val();
                 price = $('#price').val();
                 qty = $('#qty').val();
-                discount = $('#discount').val();
                 itemId = $('#item_id').val();
                 table.row.add([
                     item,
                     price,
                     qty,
-                    price * (discount / 100) * qty,
-                    price * qty * (1 - (discount / 100)),
+                    price*qty,
                     itemId,
-                    "",
+                    ''
                 ]).draw(false);
                 item = $('#item').val("");
                 price = $('#price').val("");
                 qty = $('#qty').val("");
-                discount = $('#discount').val("");
                 itemId = $('#item_id').val("");
                 $('#dialog').dialog('close');
                 var item_index = $('#item_index').val();
@@ -130,22 +132,19 @@
             });
 
             function calulateTotal() {
-                completeTotal = table.column(4, {page: 'current'}).data().sum();
-                totalDiscount = $("#totalDiscount").val();
-                $('#discountedPrice').text(completeTotal * (totalDiscount / 100));
-                finalTotal = completeTotal * (1 - (totalDiscount / 100));
-                $("#total").text(finalTotal);
+                completeTotal = table.column(3, {page: 'current'}).data().sum();
+                $("#total").text(completeTotal);
             }
 
             table = $('#employeesTable').DataTable({
                 "columnDefs": [
                     {
-                        "targets": [5],
+                        "targets": [4],
                         "visible": false,
                         "searchable": false
                     },
                     {
-                        "targets": [6],
+                        "targets": [5],
                         "visible": false,
                         "searchable": false
                     }
@@ -153,37 +152,34 @@
             });
 
 
-            var saleId = $('#saleId').val();
-            if (saleId != "") {
+            var goodReceiveNoteId = $('#goodReceiveNoteId').val();
+            if (goodReceiveNoteId != "") {
                 $.ajax({
-                    url: "/api/sale/show",
-                    data: {sale: saleId},
-                    success: function (sale) {
-                        $("#orderDate").datepicker("setDate", new Date(sale.orderDate));
-                        $('#totalDiscount').val(sale.totalDiscount);
-                        sale.saleOrderDetail.forEach(function (row) {
+                    url: "/api/grn/show",
+                    data: {grnId: goodReceiveNoteId},
+                    success: function (goodReceiveNote) {
+                        $("#orderDate").datepicker("setDate", new Date(goodReceiveNote.orderDate));
+                        goodReceiveNote.goodReceiveNoteDetail.forEach(function (row) {
                             table.row.add([
                                 row.item.name,
-                                row.price,
+                                row.buyingPrice,
                                 row.quantity,
-                                row.discount,
                                 row.total,
                                 row.item.id,
                                 row.id,
                             ]).draw(false);
                         });
+                        calulateTotal();
                     },
                 });
             }
 
             $('#employeesTable tbody').on('click', 'tr', function () {
                 var rowData = table.row(this).data();
-                discount = (rowData[3] * 100) / (rowData[1] * rowData[2]);
                 item = $('#item').val(rowData[0]);
                 price = $('#price').val(rowData[1]);
                 qty = $('#qty').val(rowData[2]);
-                discount = $('#discount').val(discount);
-                itemId = $('#item_id').val(rowData[5]);
+                itemId = $('#item_id').val(rowData[4]);
                 $('#dialog').dialog('open');
                 $('#item_index').val(table.row(this).index());
             });
@@ -196,45 +192,42 @@
                 calulateTotal();
             });
 
-            function formatData(saleTableData) {
+            function formatData(goodReceiveNoteTableData) {
                 var formattedData = [];
-                saleTableData.forEach(function (data) {
+                goodReceiveNoteTableData.forEach(function (data) {
                     var formattedRow = {};
-                    formattedRow['price'] = data[1];
+                    formattedRow['buyingPrice'] = data[1];
                     formattedRow['quantity'] = data[2];
-                    formattedRow['discount'] = data[3];
-                    formattedRow['total'] = data[4];
-                    formattedRow['item'] = {'id': data[5]};
+                    formattedRow['total'] = data[3];
+                    formattedRow['item'] = {'id': data[4]};
                     formattedData.push(formattedRow);
                 });
                 return formattedData;
             }
 
             $('#saveButton').click(function (event) {
-                var saleTableData = table.data().toArray();
-                formattedData = formatData(saleTableData);
-                totalDiscount = $('#totalDiscount').val();
-                saleId = $('#saleId').val();
-                customer = $('#customer').val();
+                var goodReceiveNoteTableData = table.data().toArray();
+                formattedData = formatData(goodReceiveNoteTableData);
+                goodReceiveNoteId = $('#goodReceiveNoteId').val();
+                supplier = $('#supplier').val();
                 orderDate = $('#orderDate').val();
                 var postdata = {};
-                postdata.sale = {
-                    id: saleId,
-                    customer: {
-                        id: customer
+                postdata =  {
+                    id: goodReceiveNoteId,
+                    supplier: {
+                        id: supplier
                     },
                     orderDate: orderDate,
-                    totalDiscount : parseFloat(totalDiscount),
-                    saleOrderDetail: formattedData
+                    goodReceiveNoteDetails : formattedData
                 };
                 $.ajax({
                     type: "POST",
-                    url: "/api/sale/save",
+                    url: "/api/grn/save",
                     contentType: "application/json; charset=utf-8",
                     dataType: 'json',
                     data: JSON.stringify(postdata),
                     success: function (response) {
-
+                            $('.alert').show();
                     },
                 });
             });
@@ -249,21 +242,17 @@
         <input type="hidden" class="form-control" id="item_id"/>
         <input type="hidden" class="form-control" id="item_index"/>
         <input class="form-control" type="text" id="item"/>
-        <%--this is important    &lt;%&ndash;<form:select id="customer" class="form-control" path="customer.id" items="${customerList}" itemValue="id" itemLabel="name" />&ndash;%&gt;--%>
-        <%--<form:option value="customer.id">customer.name</form:option>--%>
-        <%--<form:options items="${customerList}" />--%>
+        <%--this is important    &lt;%&ndash;<form:select id="supplier" class="form-control" path="supplier.id" items="${supplierList}" itemValue="id" itemLabel="name" />&ndash;%&gt;--%>
+        <%--<form:option value="supplier.id">supplier.name</form:option>--%>
+        <%--<form:options items="${supplierList}" />--%>
     </div>
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="price">Price : </label>
+        <label class="col-sm-2 col-form-label" for="price">Buying Price : </label>
         <input class="form-control" id="price" type="number"/>
     </div>
     <div class="form-group row">
         <label class="col-sm-2 col-form-label" for="qty">Quantity : </label>
         <input class="form-control" id="qty" type="number"/>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="discount">Discount : </label>
-        <input class="form-control" id="discount" type="number"/>
     </div>
     <div class="form-group row float-right">
         <input type="button" id="addItem" value="Add">
@@ -271,18 +260,22 @@
 </form>
 </div>
 <div class="container">
-    <form:form method="POST" action="/sale/save" modelAttribute="sale">
+    <div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        Good Receive Note Successfully Saved !
+    </div>
+    <form:form method="POST" action="/goodReceiveNote/save" modelAttribute="goodReceiveNote">
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="customer">Customer:</label>
+            <label class="col-sm-2 col-form-label" for="supplier">Supplier:</label>
             <div class="col-sm-10">
-                <form:input type="text" class="form-control" id="customer_name" path="customer.name"/>
-                <form:input type="hidden" class="form-control" id="customer" path="customer.id"/>
-                <form:input type="hidden" class="form-control" id="saleId" path="id"/>
+                <form:input type="text" class="form-control" id="supplier_name" path="supplier.name"/>
+                <form:input type="hidden" class="form-control" id="supplier" path="supplier.id"/>
+                <form:input type="hidden" class="form-control" id="goodReceiveNoteId" path="id"/>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="orderDate">Date:</label>
-            <fmt:formatDate type="date" value="${sale.orderDate}" var="orderDate"/>
+            <fmt:formatDate type="date" value="${goodReceiveNote.orderDate}" var="orderDate"/>
             <div class="col-sm-10">
                 <form:input id="orderDate" class="datepicker form-control" path="orderDate"/>
             </div>
@@ -292,14 +285,13 @@
             <input type="button" class="btn btn-primary" id="saveButton" value="Submit"/>
         </div>
     </form:form>
-    <h5>Invoice</h5>
+    <h5>Good Receive Note</h5>
     <table id="employeesTable" class="display">
         <thead>
         <tr>
             <th>Item</th>
-            <th>Price</th>
+            <th>Buying Price</th>
             <th>Qty</th>
-            <th>Discount</th>
             <th class="sum">Total</th>
             <th></th>
             <th></th>
@@ -307,13 +299,8 @@
         </thead>
         <tfoot>
         <tr>
-            <th style="text-align:right">Discount:<input type="number" id="totalDiscount" value="0"></th>
-            <th>Discount Total</th>
-            <th id="discountedPrice">0.00</th>
-            <th style="text-align:right">Total</th>
+            <th colspan="3">Total</th>
             <th id="total"></th>
-            <th></th>
-            <th></th>
         </tr>
         </tfoot>
     </table>

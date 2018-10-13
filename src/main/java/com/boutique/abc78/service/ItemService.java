@@ -32,4 +32,13 @@ public class ItemService {
         }
         return list;
     }
+
+    public Item save(Item item) {
+        return itemDao.save(item);
+    }
+
+    public Item getItemById(Integer id) {
+        Item item = itemDao.getItemById(id);
+        return item;
+    }
 }
