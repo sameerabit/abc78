@@ -24,6 +24,7 @@ public class ItemDaoImpl implements ItemDao {
     public List<Item> getAllItems() {
         EntityManager em = entityManagerFactory.createEntityManager();
         List<Item> itemList = em.createQuery("SELECT c FROM Item c").getResultList();
+        em.close();
         return itemList;
     }
 
@@ -33,6 +34,7 @@ public class ItemDaoImpl implements ItemDao {
         Query query = em.createQuery("SELECT c FROM Item c where c.name LIKE :name");
         query.setParameter("name", "%" + name + "%");
         List<Item> itemList = query.getResultList();
+        em.close();
         return itemList;
     }
 
@@ -42,6 +44,7 @@ public class ItemDaoImpl implements ItemDao {
         em.getTransaction().begin();
         em.persist(item);
         em.getTransaction().commit();
+        em.close();
         return item;
     }
 
@@ -51,6 +54,7 @@ public class ItemDaoImpl implements ItemDao {
         Query query = em.createQuery("SELECT c FROM Item c where c.id = :id");
         query.setParameter("id", itemId );
         Item item = (Item) query.getSingleResult();
+        em.close();
         return item;
     }
 

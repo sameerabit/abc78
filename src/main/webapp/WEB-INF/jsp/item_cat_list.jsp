@@ -20,9 +20,9 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="customer">Category :</label>
             <div class="col-sm-10">
-                    <form:select id="itemCategory" class="form-control" path="itemCategory.id" items="${itemCategories}" itemValue="id" itemLabel="name" >
+                <form:select id="itemCategory" class="form-control" path="itemCategory.id" items="${itemCategories}" itemValue="id" itemLabel="name" >
                     <form:option value="itemCategory.id">itemCategory.name</form:option>
-                    </form:select>
+                </form:select>
             </div>
         </div>
         <div class="form-group row">

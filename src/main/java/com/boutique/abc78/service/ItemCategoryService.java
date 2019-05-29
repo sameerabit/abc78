@@ -23,5 +23,14 @@ public class ItemCategoryService {
         return this.itemCategoryDao.getAllCategories();
     }
 
+    public ItemCategory save(ItemCategory itemCategory) {
+        return itemCategoryDao.save(itemCategory);
+    }
+
+    public ItemCategory getItemCatById(Integer id) {
+        ItemCategory itemCategory = itemCategoryDao.getItemCatById(id);
+        return itemCategory;
+    }
+
 
 }

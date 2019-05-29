@@ -8,4 +8,8 @@ public interface ItemCategoryDao {
 
     List<ItemCategory> getAllCategories();
 
+    public ItemCategory  save(ItemCategory itemCategory);
+
+    public ItemCategory getItemCatById(int itemCatId);
+
 }

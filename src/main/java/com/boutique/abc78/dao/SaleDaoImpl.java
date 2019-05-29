@@ -29,6 +29,7 @@ public class SaleDaoImpl implements SaleDao {
         em.getTransaction().begin();
         em.merge(sale);
         em.getTransaction().commit();
+        em.close();
         return sale;
     }
 
@@ -56,5 +57,7 @@ public class SaleDaoImpl implements SaleDao {
         query.setParameter("id", saleId);
         Sale sale = (Sale) query.getSingleResult();
         sale.getSaleOrderDetail().remove(sale);
+        em.close();
+
     }
 }
