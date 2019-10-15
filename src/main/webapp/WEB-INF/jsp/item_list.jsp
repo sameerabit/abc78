@@ -5,12 +5,12 @@
 <html>
 
 <body>
-<div class="container">
-    <div class="float-none">
-        <h5>Item List</h5>
+<div class="container border my-5">
+    <div class="my-3 mx-auto d-flex" style="width: 80%">
+        <h4>Item List</h4>
 
     </div>
-    <table class="table" style="width: 80%">
+    <table class="table m-auto" style="width: 80%">
         <thead class="thead-light">
         <tr>
             <th scope="col">Name</th>

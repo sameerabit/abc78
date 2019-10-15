@@ -128,6 +128,7 @@
                 var item_index = $('#item_index').val();
                 if (item_index != "") {
                     table.row(item_index).remove().draw(false);
+                    $('#item_index').val("");
                 }
             });
 
@@ -147,7 +148,17 @@
                         "targets": [5],
                         "visible": false,
                         "searchable": false
-                    }
+                    },
+                    {
+                        "targets": [6],
+                        "data": null,
+                        "defaultContent": "<button class='btn'><i class=\"icon-remove\"></i></button>"
+                    },
+                    {
+                        "targets": [7],
+                        "data": null,
+                        "defaultContent": "<button class='btn show'>Show</button>"
+                    },
                 ]
             });
 
@@ -174,14 +185,20 @@
                 });
             }
 
-            $('#employeesTable tbody').on('click', 'tr', function () {
-                var rowData = table.row(this).data();
+            $('#employeesTable tbody').on('click', '.show', function () {
+                var rowData = table.row($(this).parents('tr')).data();
                 item = $('#item').val(rowData[0]);
                 price = $('#price').val(rowData[1]);
                 qty = $('#qty').val(rowData[2]);
                 itemId = $('#item_id').val(rowData[4]);
                 $('#dialog').dialog('open');
-                $('#item_index').val(table.row(this).index());
+                $('#item_index').val(table.row($(this).parents('tr')).index());
+            });
+
+            $('#employeesTable tbody').on('click', '.icon-remove', function () {
+                console.log($(this).parents('tr'));
+                table.row($(this).parents('tr')).remove().draw();
+                calulateTotal();
             });
 
             $("#employeesTable").on('search.dt', function () {
@@ -295,11 +312,14 @@
             <th class="sum">Total</th>
             <th></th>
             <th></th>
+            <th></th>
+            <th></th>
+
         </tr>
         </thead>
         <tfoot>
         <tr>
-            <th colspan="3">Total</th>
+            <th colspan="5">Total</th>
             <th id="total"></th>
         </tr>
         </tfoot>

@@ -16,18 +16,18 @@
     </style>
 </head>
 <div class="container">
-    <form:form method="POST" action="/category/save" modelAttribute="itemCategory">
+    <form:form method="POST" action="/expense/save" modelAttribute="expense">
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="itemCategory">Name :</label>
+            <label class="col-sm-2 col-form-label" for="expense_name">Name :</label>
             <div class="col-sm-10">
-                <form:input type="text" class="form-control" id="name" path="name"/>
-                <form:input type="hidden" class="form-control" id="id" path="id"/>
+                <form:input type="text" class="form-control" id="expense_name" path="name"/>
+                <form:input type="hidden" class="form-control" id="expense" path="id"/>
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="description">Description:</label>
+            <label class="col-sm-2 col-form-label" for="date">Date:</label>
             <div class="col-sm-10">
-                <form:input type="text" class="form-control" id="description" path="description"/>
+                <form:input type="date" class="form-control" id="date" path="date"/>
             </div>
         </div>
         <div style="float: right;margin-bottom: 10px;">

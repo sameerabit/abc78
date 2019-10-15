@@ -5,15 +5,7 @@
 <html>
 <head>
     <style type="text/css">
-        div.container {
-            width: 70%;
-            margin-top: 10px;
-        }
 
-        input[type=text] {
-            width: 300px !important;
-            height: 35px !important;
-        }
     </style>
     <script>
 
@@ -26,9 +18,13 @@
             $("#orderDate").datepicker("option", "dateFormat", "yy-mm-dd");
 
             jQuery.fn.dataTable.Api.register('sum()', function () {
-                return this.flatten().reduce(function (a, b) {
-                    return (a * 1) + (b * 1); // cast values in-case they are strings
-                });
+                if(this.flatten().count() != 0){
+                    return this.flatten().reduce(function (a, b) {
+                        return (a * 1) + (b * 1); // cast values in-case they are strings
+                    });
+                }
+                return 0;
+
             });
 
 
@@ -115,7 +111,7 @@
                     price * (discount / 100) * qty,
                     price * qty * (1 - (discount / 100)),
                     itemId,
-                    "",
+                    ''
                 ]).draw(false);
                 item = $('#item').val("");
                 price = $('#price').val("");
@@ -126,6 +122,7 @@
                 var item_index = $('#item_index').val();
                 if (item_index != "") {
                     table.row(item_index).remove().draw(false);
+                    $('#item_index').val("");
                 }
             });
 
@@ -148,7 +145,17 @@
                         "targets": [6],
                         "visible": false,
                         "searchable": false
-                    }
+                    },
+                    {
+                        "targets": [7],
+                        "data": null,
+                        "defaultContent": "<button class='btn'><i class=\"icon-remove\"></i></button>"
+                    },
+                    {
+                        "targets": [8],
+                        "data": null,
+                        "defaultContent": "<button class='btn show'>Show</button>"
+                    },
                 ]
             });
 
@@ -176,8 +183,8 @@
                 });
             }
 
-            $('#employeesTable tbody').on('click', 'tr', function () {
-                var rowData = table.row(this).data();
+            $('#employeesTable tbody').on('click', '.show', function () {
+                var rowData = table.row($(this).parents('tr')).data();
                 discount = (rowData[3] * 100) / (rowData[1] * rowData[2]);
                 item = $('#item').val(rowData[0]);
                 price = $('#price').val(rowData[1]);
@@ -185,7 +192,13 @@
                 discount = $('#discount').val(discount);
                 itemId = $('#item_id').val(rowData[5]);
                 $('#dialog').dialog('open');
-                $('#item_index').val(table.row(this).index());
+                $('#item_index').val(table.row($(this).parents('tr')).index());
+            });
+
+            $('#employeesTable tbody').on('click', '.icon-remove', function () {
+                console.log($(this).parents('tr'));
+                table.row($(this).parents('tr')).remove().draw();
+                calulateTotal();
             });
 
             $("#employeesTable").on('search.dt', function () {
@@ -234,7 +247,8 @@
                     dataType: 'json',
                     data: JSON.stringify(postdata),
                     success: function (response) {
-
+                        alert('Succeesfully Added.');
+                        window.location();
                     },
                 });
             });
@@ -243,38 +257,44 @@
     </script>
 </head>
 <body>
-<form id="dialog" title="Add Item">
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="item">Item:</label>
-        <input type="hidden" class="form-control" id="item_id"/>
-        <input type="hidden" class="form-control" id="item_index"/>
-        <input class="form-control" type="text" id="item"/>
-        <%--this is important    &lt;%&ndash;<form:select id="customer" class="form-control" path="customer.id" items="${customerList}" itemValue="id" itemLabel="name" />&ndash;%&gt;--%>
-        <%--<form:option value="customer.id">customer.name</form:option>--%>
-        <%--<form:options items="${customerList}" />--%>
+    <div class="container">
+    <form id="dialog" title="Add Item">
+        <div class="form-group row">
+            <label class="col-3 col-form-label" for="item">Item:</label>
+            <input type="hidden" class="form-control" id="item_id"/>
+            <input type="hidden" class="form-control" id="item_index"/>
+            <input required class="form-control col-9" type="text" id="item"/>
+
+        </div>
+        <div class="form-group row">
+            <label class="col-3 col-form-label" for="price">Price : </label>
+            <input class="form-control col-9" id="price" type="number"/>
+        </div>
+        <div class="form-group row">
+            <label class="col-3 col-form-label" for="qty">Quantity : </label>
+            <input class="form-control col-9" id="qty" type="number"/>
+        </div>
+        <div class="form-group row">
+            <label class="col-3 col-form-label" for="discount">Discount : </label>
+            <input class="form-control col-9" id="discount" type="number"/>
+        </div>
+        <div class="form-group row float-right">
+            <input type="submit" id="addItem" value="Add">
+        </div>
+    </form>
     </div>
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="price">Price : </label>
-        <input class="form-control" id="price" type="number"/>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col text-center">
+                <h3>Sales Order</h3>
+            </div>
+        </div>
     </div>
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="qty">Quantity : </label>
-        <input class="form-control" id="qty" type="number"/>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="discount">Discount : </label>
-        <input class="form-control" id="discount" type="number"/>
-    </div>
-    <div class="form-group row float-right">
-        <input type="button" id="addItem" value="Add">
-    </div>
-</form>
-</div>
-<div class="container">
+<div class="container mt-5">
     <form:form method="POST" action="/sale/save" modelAttribute="sale">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="customer">Customer:</label>
-            <div class="col-sm-10">
+            <div class="col-sm-4">
                 <form:input type="text" class="form-control" id="customer_name" path="customer.name"/>
                 <form:input type="hidden" class="form-control" id="customer" path="customer.id"/>
                 <form:input type="hidden" class="form-control" id="saleId" path="id"/>
@@ -283,7 +303,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="orderDate">Date:</label>
             <fmt:formatDate type="date" value="${sale.orderDate}" var="orderDate"/>
-            <div class="col-sm-10">
+            <div class="col-sm-4">
                 <form:input id="orderDate" class="datepicker form-control" path="orderDate"/>
             </div>
         </div>
@@ -303,6 +323,9 @@
             <th class="sum">Total</th>
             <th></th>
             <th></th>
+            <th></th>
+            <th></th>
+
         </tr>
         </thead>
         <tfoot>
@@ -314,6 +337,9 @@
             <th id="total"></th>
             <th></th>
             <th></th>
+            <th></th>
+            <th></th>
+
         </tr>
         </tfoot>
     </table>

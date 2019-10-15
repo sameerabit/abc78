@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/itemCategory")
+@RequestMapping(value = "/category")
 public class ItemCategoryController {
 
 
@@ -38,7 +38,7 @@ public class ItemCategoryController {
     @RequestMapping(value="/save", method=RequestMethod.POST)
     public String save(@Valid @ModelAttribute("item")ItemCategory itemCategory){
         itemCategoryService.save(itemCategory);
-        return "redirect:/itemCategory/show/"+itemCategory.getId();
+        return "redirect:/category/show/"+itemCategory.getId();
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)

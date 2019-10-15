@@ -7,7 +7,7 @@
 <body>
 <div class="container">
 <div class="float-none">
-    <h5>Sales List</h5>
+    <h5>Suppliers List</h5>
 
 </div>
 <table class="table" style="width: 80%">

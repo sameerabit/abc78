@@ -12,6 +12,8 @@
 
     <link rel="stylesheet" href="/webjars/datatables/1.10.12/media/css/jquery.dataTables.min.css">
     <script src="/webjars/datatables/1.10.12/media/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="/webjars/font-awesome/3.2.1/css/font-awesome.min.css">
+
 </head>
 
 <body>
@@ -23,22 +25,50 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="saleLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Sales
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="/sale/">Create</a>
                     <a class="dropdown-item" href="/sale/list">View</a>
-                    <a class="dropdown-item" href="#">Report</a>
                 </div>
             </li>
-            <%--<li class="nav-item">--%>
-                <%--<a class="nav-link" href="#">Features</a>--%>
-            <%--</li>--%>
-            <%--<li class="nav-item">--%>
-                <%--<a class="nav-link" href="#">Pricing</a>--%>
-            <%--</li>--%>
-
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="itemLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Items
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/item/">Create</a>
+                    <a class="dropdown-item" href="/item/list">View</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="supplierLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Suppliers
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/supplier/">Create</a>
+                    <a class="dropdown-item" href="/supplier/list">View</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoryLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categories
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/category/">Create</a>
+                    <a class="dropdown-item" href="/category/list">View</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="grnLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Good Receive Notes
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/grn/">Create</a>
+                    <a class="dropdown-item" href="/grn/list">View</a>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>
