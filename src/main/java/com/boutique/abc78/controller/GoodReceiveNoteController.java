@@ -48,6 +48,12 @@ public class GoodReceiveNoteController {
         return  "good_receive";
     }
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") Integer id,Model model){
+        goodReceiveService.deleteGoodReceiveNote(id);
+        return "redirect:/grn/list";
+    }
+
 
 
 

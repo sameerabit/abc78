@@ -23,6 +23,10 @@ public class GoodReceiveNote {
     @OneToMany(mappedBy = "goodReceiveNote", orphanRemoval = true, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<GoodReceiveNoteDetail> goodReceiveNoteDetails;
 
+
+    @OneToMany(mappedBy = "goodReceiveNote", orphanRemoval = true, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    private List<ItemBatch> itemBatches;
+
     private String status;
 
     public Integer getId() {
@@ -66,4 +70,11 @@ public class GoodReceiveNote {
     }
 
 
+    public List<ItemBatch> getItemBatches() {
+        return itemBatches;
+    }
+
+    public void setItemBatches(List<ItemBatch> itemBatches) {
+        this.itemBatches = itemBatches;
+    }
 }

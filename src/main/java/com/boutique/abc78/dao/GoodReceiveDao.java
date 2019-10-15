@@ -14,4 +14,6 @@ public interface GoodReceiveDao {
     GoodReceiveNote getGoodReceiveNote(Integer grnId);
 
     void removeGoodReceiveNoteDetails(Integer grnId);
+
+    void deleteGoodReceiveNote(Integer grnId);
 }

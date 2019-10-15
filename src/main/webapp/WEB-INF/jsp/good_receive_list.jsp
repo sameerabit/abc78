@@ -16,7 +16,7 @@
         <th scope="col">#</th>
         <th scope="col">Supplier</th>
         <th scope="col">Date</th>
-        <th scope="col">Action</th>
+        <th colspan="2" scope="col">Action</th>
     </tr>
     </thead>
     <tbody>
@@ -25,7 +25,8 @@
             <td>${goodReceiveNote.id}</td>
             <td>${goodReceiveNote.supplier.name}</td>
             <td>${goodReceiveNote.orderDate}</td>
-            <td><a href="/grn/show/${goodReceiveNote.id}">View</a></td>
+            <td><a class="btn btn-primary" href="/grn/show/${goodReceiveNote.id}">View</a></td>
+            <td><a class="btn btn-danger" href="/grn/delete/${goodReceiveNote.id}">Delete</a></td>
         </tr>
     </c:forEach>
     </tbody>

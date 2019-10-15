@@ -31,9 +31,13 @@
             $("#orderDate").datepicker("option", "dateFormat", "yy-mm-dd");
 
             jQuery.fn.dataTable.Api.register('sum()', function () {
-                return this.flatten().reduce(function (a, b) {
-                    return (a * 1) + (b * 1); // cast values in-case they are strings
-                });
+                if(this.flatten().count() != 0){
+                    return this.flatten().reduce(function (a, b) {
+                        return (a * 1) + (b * 1); // cast values in-case they are strings
+                    });
+                }
+                return 0;
+
             });
 
 

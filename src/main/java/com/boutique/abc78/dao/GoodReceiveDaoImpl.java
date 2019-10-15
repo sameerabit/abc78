@@ -25,7 +25,7 @@ public class GoodReceiveDaoImpl implements GoodReceiveDao {
     public GoodReceiveNote save(GoodReceiveNote goodReceiveNote) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-        em.merge(goodReceiveNote);
+        em.persist(goodReceiveNote);
         em.getTransaction().commit();
         return goodReceiveNote;
     }
@@ -54,5 +54,19 @@ public class GoodReceiveDaoImpl implements GoodReceiveDao {
         query.setParameter("id", grnId);
         GoodReceiveNote goodReceiveNote = (GoodReceiveNote) query.getSingleResult();
         goodReceiveNote.getGoodReceiveNoteDetail().remove(goodReceiveNote);
+    }
+
+    @Override
+    @Transactional
+    public void deleteGoodReceiveNote(Integer grnId) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Query query = em.createQuery("SELECT g FROM GoodReceiveNote g where g.id = :id");
+        query.setParameter("id", grnId);
+        GoodReceiveNote goodReceiveNote = (GoodReceiveNote) query.getSingleResult();
+        goodReceiveNote.getGoodReceiveNoteDetail().remove(goodReceiveNote);
+        goodReceiveNote.getItemBatches().remove(goodReceiveNote);
+        em.getTransaction().begin();
+        em.remove(goodReceiveNote);
+        em.getTransaction().commit();
     }
 }
