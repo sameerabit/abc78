@@ -36,8 +36,8 @@ public class ItemCategoryController {
     }
 
     @RequestMapping(value="/save", method=RequestMethod.POST)
-    public String save(@Valid @ModelAttribute("item")ItemCategory itemCategory){
-        itemCategoryService.save(itemCategory);
+    public String save(@Valid @ModelAttribute("itemCategory")ItemCategory itemCategory){
+        itemCategory = itemCategoryService.save(itemCategory);
         return "redirect:/category/show/"+itemCategory.getId();
     }
 

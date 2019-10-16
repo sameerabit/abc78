@@ -32,7 +32,11 @@ public class ItemCategoryDaoImpl implements ItemCategoryDao {
     public ItemCategory save(ItemCategory itemCategory) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-        em.merge(itemCategory);
+        if(itemCategory.getId() == null){
+            em.persist(itemCategory);
+        }else{
+            em.merge(itemCategory);
+        }
         em.getTransaction().commit();
         em.close();
         return itemCategory;

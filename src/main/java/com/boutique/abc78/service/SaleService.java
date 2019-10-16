@@ -1,8 +1,10 @@
 package com.boutique.abc78.service;
 
+import com.boutique.abc78.dao.ItemBatchDaoImpl;
 import com.boutique.abc78.dao.SaleDaoImpl;
 import com.boutique.abc78.model.Customer;
 import com.boutique.abc78.model.Sale;
+import com.boutique.abc78.model.SaleOrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,15 @@ public class SaleService {
     @Autowired
     private SaleDaoImpl saleDao;
 
+    @Autowired
+    private ItemBatchDaoImpl itemBatchDao;
+
 
     public Sale save(Sale sale){
         sale = this.saleDao.save(sale);
+        for (SaleOrderDetail saleOrderDetail : sale.getSaleOrderDetail()) {
+            itemBatchDao.reduceQuantityForSales(saleOrderDetail);
+        }
         return sale;
     }
 
