@@ -6,19 +6,23 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <title>Log in with your account</title>
+<head>
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/webjars/jquery-ui/1.12.1/jquery-ui.css">
 
-      <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-      <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
-  </head>
+    <link rel="stylesheet" href="/webjars/font-awesome/3.2.1/css/font-awesome.min.css">
 
+</head>
   <body>
 
     <div class="container">
       <form method="POST" action="${contextPath}/login" class="form-signin">
         <h2 class="form-heading">Log in</h2>
+
+          form-
 
         <div class="form-group ${error != null ? 'has-error' : ''}">
             <span>${message}</span>
@@ -33,8 +37,5 @@
         </div>
       </form>
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
   </body>
 </html>

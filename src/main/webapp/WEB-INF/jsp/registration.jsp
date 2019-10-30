@@ -5,13 +5,18 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <title>Create an account</title>
+<head>
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/webjars/jquery-ui/1.12.1/jquery-ui.css">
 
-      <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-      <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
-  </head>
+    <link rel="stylesheet" href="/webjars/datatables/1.10.12/media/css/jquery.dataTables.min.css">
+    <script src="/webjars/datatables/1.10.12/media/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="/webjars/font-awesome/3.2.1/css/font-awesome.min.css">
+
+</head>
 
   <body>
 
@@ -46,8 +51,5 @@
         </form:form>
 
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
   </body>
 </html>
