@@ -41,4 +41,9 @@ public class ItemService {
         Item item = itemDao.getItemById(id);
         return item;
     }
+
+    public int delete(int id){
+        return itemDao.delete(id);
+    }
+
 }

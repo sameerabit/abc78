@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/webjars/**", "/registration").permitAll()
+                .antMatchers("/webjars/**", "/registration","/resources/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -35,7 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .logout()
                 .permitAll();
+
     }
+
 
     @Bean
     public AuthenticationManager customAuthenticationManager() throws Exception {

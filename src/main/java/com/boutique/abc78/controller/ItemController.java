@@ -6,9 +6,12 @@ import com.boutique.abc78.model.ItemCategory;
 import com.boutique.abc78.model.Sale;
 import com.boutique.abc78.service.ItemCategoryService;
 import com.boutique.abc78.service.ItemService;
+import com.boutique.abc78.validator.CategoryValidator;
+import com.boutique.abc78.validator.ItemValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,6 +27,9 @@ public class ItemController {
 
     @Autowired
     ItemCategoryService itemCategoryService;
+
+    @Autowired
+    ItemValidator itemValidator;
 
     @RequestMapping(value = "/getItemsNameLike", method = RequestMethod.GET)
     @ResponseBody
@@ -41,25 +47,36 @@ public class ItemController {
 
     @RequestMapping("/")
     public String index(Model model){
-        List<ItemCategory> allCategories = itemCategoryService.getAllCategories();
+        List<ItemCategory> allCategories = itemCategoryService.getAllCategories("");
         model.addAttribute("itemCategories",allCategories);
         model.addAttribute("item", new Item());
         return  "item";
     }
 
     @RequestMapping(value="/save", method=RequestMethod.POST)
-    public String save(@Valid @ModelAttribute("item")Item item){
+    public String save(@Valid @ModelAttribute("item")Item item, BindingResult bindingResult){
+        itemValidator.validate(item, bindingResult);
         itemService.save(item);
+        if (bindingResult.hasErrors()) {
+            return  "redirect:/item/";
+        }
         return "redirect:/item/show/"+item.getId();
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String show(@PathVariable("id") Integer id,Model model){
-        List<ItemCategory> allCategories = itemCategoryService.getAllCategories();
+        List<ItemCategory> allCategories = itemCategoryService.getAllCategories("");
         model.addAttribute("itemCategories",allCategories);
         Item item = itemService.getItemById(id);
         model.addAttribute("item", item);
         return  "item";
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") Integer id,Model model){
+        int res = itemService.delete(id);
+        return "redirect:/item/list/";
+
     }
 
 

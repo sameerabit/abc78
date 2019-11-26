@@ -5,12 +5,27 @@
 <html>
 
 <body>
-<div class="container border my-5">
-    <div class="my-3 mx-auto d-flex" style="width: 80%">
-        <h4>Item List</h4>
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header">
+            Item List
+        </div>
 
-    </div>
-    <table class="table m-auto" style="width: 80%">
+        <div class="card-body">
+            <form action="/item/list">
+                <div class="form-group row">
+                    <div class="col-sm-6 mx-auto">
+                        <input class="form-control" type="text" name="search">
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="btn btn-info" value="Search">
+                    </div>
+                    <div class="col text-right">
+                        <a href="/item/" class="btn btn-info" >New Item</a>
+                    </div>
+                </div>
+            </form>
+    <table class="table m-auto">
         <thead class="thead-light">
         <tr>
             <th scope="col">Name</th>
@@ -25,11 +40,18 @@
                 <td>${item.name}</td>
                 <td>${item.description}</td>
                 <td>${item.itemCategory.name}</td>
-                <td><a href="/item/show/${item.id}">View</a></td>
+                <td>
+                    <a href="/item/show/${item.id}">View</a>
+                    <a href="/item/delete/${item.id}">Delete</a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
+        </div>
+
+    </div>
+
 
 </div>
 

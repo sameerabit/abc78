@@ -5,12 +5,27 @@
 <html>
 
 <body>
-<div class="container">
-<div class="float-none">
-    <h5>Suppliers List</h5>
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header">
+            Item List
+        </div>
 
-</div>
-<table class="table" style="width: 80%">
+        <div class="card-body">
+            <form action="/item/list">
+                <div class="form-group row">
+                    <div class="col-sm-6 mx-auto">
+                        <input class="form-control" type="text" name="search">
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="btn btn-info" value="Search">
+                    </div>
+                    <div class="col text-right">
+                        <a href="/item/" class="btn btn-info" >New Supplier</a>
+                    </div>
+                </div>
+            </form>
+<table class="table">
     <thead class="thead-light">
     <tr>
         <th scope="col">Name</th>
@@ -27,11 +42,18 @@
             <td>${supplier.address}</td>
             <td>${supplier.email}</td>
             <td>${supplier.telNo}</td>
-            <td><a href="/supplier/show/${supplier.id}">View</a></td>
+            <td>
+                <a href="/supplier/show/${supplier.id}">View</a>
+                <a href="/supplier/delete/${item.id}">Delete</a>
+
+            </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
+
+        </div>
+    </div>
 
 </div>
 

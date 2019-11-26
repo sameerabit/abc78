@@ -37,6 +37,7 @@ public class SaleDaoImpl implements SaleDao {
     public List<Sale> getAllSales() {
         EntityManager em = entityManagerFactory.createEntityManager();
         List<Sale> saleList = em.createQuery("SELECT s FROM Sale s order by s.id desc").getResultList();
+        em.close();
         return saleList;
     }
 
@@ -46,6 +47,7 @@ public class SaleDaoImpl implements SaleDao {
         Query query = em.createQuery("SELECT s FROM Sale s where s.id = :id");
         query.setParameter("id", saleId);
         Sale sale = (Sale) query.getSingleResult();
+        em.close();
         return sale;
     }
 

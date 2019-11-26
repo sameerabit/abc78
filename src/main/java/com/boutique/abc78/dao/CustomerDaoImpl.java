@@ -24,6 +24,7 @@ public class CustomerDaoImpl implements CustomerDao {
     public List<Customer> getAllCustomers() {
         EntityManager em = entityManagerFactory.createEntityManager();
         List<Customer> customerList = em.createQuery("SELECT c FROM Customer c").getResultList();
+        em.close();
         return customerList;
     }
 
@@ -33,6 +34,7 @@ public class CustomerDaoImpl implements CustomerDao {
         Query query = em.createQuery("SELECT c FROM Customer c where c.name LIKE :name");
         query.setParameter("name", "%" + name + "%");
         List<Customer> customerList = query.getResultList();
+        em.close();
         return customerList;
     }
 }

@@ -14,4 +14,7 @@ public interface ItemDao {
     public Item save(Item item);
 
     public Item getItemById(int itemId);
+
+    public int delete(int id);
+
 }

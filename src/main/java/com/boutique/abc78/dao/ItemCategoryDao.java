@@ -6,10 +6,12 @@ import java.util.List;
 
 public interface ItemCategoryDao {
 
-    List<ItemCategory> getAllCategories();
+    List<ItemCategory> getAllCategories(String search);
 
     public ItemCategory  save(ItemCategory itemCategory);
 
     public ItemCategory getItemCatById(int itemCatId);
+
+    public int delete(int id);
 
 }

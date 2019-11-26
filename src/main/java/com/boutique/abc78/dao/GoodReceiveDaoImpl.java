@@ -27,6 +27,7 @@ public class GoodReceiveDaoImpl implements GoodReceiveDao {
         em.getTransaction().begin();
         em.persist(goodReceiveNote);
         em.getTransaction().commit();
+        em.close();
         return goodReceiveNote;
     }
 
@@ -34,6 +35,7 @@ public class GoodReceiveDaoImpl implements GoodReceiveDao {
     public List<GoodReceiveNote> getAllGoodReceiveNotes() {
         EntityManager em = entityManagerFactory.createEntityManager();
         List<GoodReceiveNote> goodReceiveNoteList = em.createQuery("SELECT g FROM GoodReceiveNote g order by g.id desc").getResultList();
+        em.close();
         return goodReceiveNoteList;
     }
 
@@ -43,6 +45,7 @@ public class GoodReceiveDaoImpl implements GoodReceiveDao {
         Query query = em.createQuery("SELECT g FROM GoodReceiveNote g where g.id = :id");
         query.setParameter("id", grnId);
         GoodReceiveNote goodReceiveNote = (GoodReceiveNote) query.getSingleResult();
+        em.close();
         return goodReceiveNote;
     }
 
@@ -54,6 +57,8 @@ public class GoodReceiveDaoImpl implements GoodReceiveDao {
         query.setParameter("id", grnId);
         GoodReceiveNote goodReceiveNote = (GoodReceiveNote) query.getSingleResult();
         goodReceiveNote.getGoodReceiveNoteDetail().remove(goodReceiveNote);
+        em.close();
+
     }
 
     @Override
@@ -68,5 +73,7 @@ public class GoodReceiveDaoImpl implements GoodReceiveDao {
         em.getTransaction().begin();
         em.remove(goodReceiveNote);
         em.getTransaction().commit();
+        em.close();
+
     }
 }

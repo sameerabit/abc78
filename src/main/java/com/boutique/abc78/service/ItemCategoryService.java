@@ -19,17 +19,22 @@ public class ItemCategoryService {
     private ItemCategoryDaoImpl itemCategoryDao;
 
 
-    public List<ItemCategory> getAllCategories() {
-        return this.itemCategoryDao.getAllCategories();
+    public List<ItemCategory> getAllCategories(String search) {
+        return this.itemCategoryDao.getAllCategories(search);
     }
 
     public ItemCategory save(ItemCategory itemCategory) {
+
         return itemCategoryDao.save(itemCategory);
     }
 
     public ItemCategory getItemCatById(Integer id) {
         ItemCategory itemCategory = itemCategoryDao.getItemCatById(id);
         return itemCategory;
+    }
+
+    public int delete(int id){
+        return itemCategoryDao.delete(id);
     }
 
 

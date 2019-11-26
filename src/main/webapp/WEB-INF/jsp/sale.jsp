@@ -5,7 +5,9 @@
 <html>
 <head>
     <style type="text/css">
-
+        .ui-dialog {
+            width: 600px !important;
+        }
     </style>
     <script>
 
@@ -41,6 +43,9 @@
             $('#customer_name').autocomplete({
                 source: function (request, response) {
                     $.ajax({
+                        headers: {
+                            "X-CSRF-TOKEN": $('#_csrf_token').val()
+                        },
                         url: "/customer/getCustomersByNameLike",
                         data: {
                             name: request.term
@@ -63,6 +68,9 @@
             $('#item').autocomplete({
                 source: function (request, response) {
                     $.ajax({
+                        headers: {
+                            "X-CSRF-TOKEN":$('#_csrf_token').val()
+                        },
                         url: "/item/getItemsNameLike",
                         data: {
                             name: request.term
@@ -99,6 +107,7 @@
             var counter = 1;
 
             $('#addItem').click(function (event) {
+                event.preventDefault();
                 item = $('#item').val();
                 price = $('#price').val();
                 qty = $('#qty').val();
@@ -163,6 +172,9 @@
             var saleId = $('#saleId').val();
             if (saleId != "") {
                 $.ajax({
+                    headers: {
+                        "X-CSRF-TOKEN": $('#_csrf_token').val()
+                    },
                     url: "/api/sale/show",
                     data: {sale: saleId},
                     success: function (sale) {
@@ -240,7 +252,12 @@
                     totalDiscount : parseFloat(totalDiscount),
                     saleOrderDetail: formattedData
                 };
+                var token = $('#_csrf_token').val();
+                var header = "X-CSRF-TOKEN";
                 $.ajax({
+                    headers: {
+                        "X-CSRF-TOKEN":token
+                    },
                     type: "POST",
                     url: "/api/sale/save",
                     contentType: "application/json; charset=utf-8",
@@ -248,7 +265,7 @@
                     data: JSON.stringify(postdata),
                     success: function (response) {
                         alert('Succeesfully Added.');
-                        window.location();
+                        window.location('/sale/list');
                     },
                 });
             });
@@ -258,28 +275,29 @@
 </head>
 <body>
     <div class="container">
-    <form id="dialog" title="Add Item">
+    <form novalidate id="dialog" title="Add Item">
         <div class="form-group row">
-            <label class="col-3 col-form-label" for="item">Item:</label>
+            <label class="col-4 col-form-label" for="item">Item:</label>
             <input type="hidden" class="form-control" id="item_id"/>
             <input type="hidden" class="form-control" id="item_index"/>
-            <input required class="form-control col-9" type="text" id="item"/>
+            <input class="form-control col-8" type="text" id="item"/>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
         </div>
         <div class="form-group row">
-            <label class="col-3 col-form-label" for="price">Price : </label>
-            <input class="form-control col-9" id="price" type="number"/>
+            <label class="col-4 col-form-label" for="price">Price : </label>
+            <input class="form-control col-8" id="price" type="number"/>
         </div>
         <div class="form-group row">
-            <label class="col-3 col-form-label" for="qty">Quantity : </label>
-            <input class="form-control col-9" id="qty" type="number"/>
+            <label class="col-4 col-form-label" for="qty">Quantity : </label>
+            <input class="form-control col-8" id="qty" type="number"/>
         </div>
         <div class="form-group row">
-            <label class="col-3 col-form-label" for="discount">Discount : </label>
-            <input class="form-control col-9" id="discount" type="number"/>
+            <label class="col-4 col-form-label" for="discount">Discount : </label>
+            <input class="form-control col-8" id="discount" type="number"/>
         </div>
         <div class="form-group row float-right">
-            <input type="submit" id="addItem" value="Add">
+            <input class="btn btn-success" type="submit" id="addItem" value="Add">
         </div>
     </form>
     </div>
@@ -298,6 +316,9 @@
                 <form:input type="text" class="form-control" id="customer_name" path="customer.name"/>
                 <form:input type="hidden" class="form-control" id="customer" path="customer.id"/>
                 <form:input type="hidden" class="form-control" id="saleId" path="id"/>
+                <input id="_csrf_token" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <%--<input id="_csrf_header" type="hidden" name="${_csrf.parameterName}" value="${_csrf.header}"/>--%>
+
             </div>
         </div>
         <div class="form-group row">

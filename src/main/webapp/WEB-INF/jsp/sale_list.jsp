@@ -5,12 +5,27 @@
 <html>
 
 <body>
-<div class="container">
-<div class="float-none">
-    <h5>Sales List</h5>
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header">
+            Sales
+        </div>
+        <div class="card-body">
+            <form action="/category/list">
+                <div class="form-group row">
+                    <div class="col-sm-6 mx-auto">
+                        <input class="form-control" type="text" name="search">
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="btn btn-info" value="Search">
+                    </div>
+                    <div class="col text-right">
+                        <a href="/category/" class="btn btn-info" >New Sale</a>
+                    </div>
+                </div>
+            </form>
 
-</div>
-<table class="table" style="width: 80%">
+<table class="table" >
     <thead class="thead-light">
     <tr>
         <th scope="col">#</th>
@@ -34,6 +49,10 @@
     </c:forEach>
     </tbody>
 </table>
+        </div>
+
+    </div>
+
 
 </div>
 

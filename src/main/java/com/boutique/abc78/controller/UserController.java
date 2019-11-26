@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class UserController {
 
@@ -29,7 +31,7 @@ public class UserController {
         return "registration";
     }
 
-    @PostMapping("/registration")
+    @RequestMapping("/registration")
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
         userValidator.validate(userForm, bindingResult);
 
@@ -41,10 +43,10 @@ public class UserController {
 
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 
-        return "redirect:/welcome";
+        return "redirect:/index";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping(path ="/login")
     public String login(Model model, String error, String logout) {
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
@@ -55,8 +57,29 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping({"/", "/welcome"})
+    @GetMapping({"/", "/index"})
     public String welcome(Model model) {
-        return "welcome";
+        return "index";
+    }
+
+
+    @RequestMapping("/users")
+    public String getAllItems(Model model){
+        List<User> users = userService.findAll();
+        model.addAttribute("users", users);
+        return  "users";
+    }
+
+    @GetMapping("/user/edit")
+    public String edit(Model model) {
+        model.addAttribute("userForm", new User());
+        return "registration";
+    }
+
+    @RequestMapping(value = "/user/edit/{username}", method = RequestMethod.GET)
+    public String show(@PathVariable("username") String username,Model model){
+        User user = userService.findByUsername(username);
+        model.addAttribute("userForm", user);
+        return "registration";
     }
 }

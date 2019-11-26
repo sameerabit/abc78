@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -56,6 +57,18 @@ public class ItemDaoImpl implements ItemDao {
         Item item = (Item) query.getSingleResult();
         em.close();
         return item;
+    }
+
+    @Override
+    @Transactional
+    public int delete(int id) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Item item = em.find(Item.class, id);
+        em.getTransaction().begin();
+        em.remove(item);
+        em.getTransaction().commit();
+        em.close();
+        return 1;
     }
 
 }

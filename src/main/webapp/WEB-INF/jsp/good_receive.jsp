@@ -280,6 +280,13 @@
     </div>
 </form>
 </div>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col text-center">
+            <h3>Good Receive Note</h3>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="alert alert-success alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -306,7 +313,7 @@
             <input type="button" class="btn btn-primary" id="saveButton" value="Submit"/>
         </div>
     </form:form>
-    <h5>Good Receive Note</h5>
+
     <table id="employeesTable" class="display">
         <thead>
         <tr>

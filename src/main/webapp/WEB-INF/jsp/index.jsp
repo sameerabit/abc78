@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html lang="en">
 
 <head>
@@ -17,13 +19,13 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary">
-    <a class="navbar-brand" href="#"></a>
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">ABC78 BOTIQUES</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="saleLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Sales
@@ -61,6 +63,15 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoryLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Expenses
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/expense/">Create</a>
+                    <a class="dropdown-item" href="/expense/list">View</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="grnLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Good Receive Notes
                 </a>
@@ -69,8 +80,29 @@
                     <a class="dropdown-item" href="/grn/list">View</a>
                 </div>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="usersLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Users
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/grn/">Create</a>
+                    <a class="dropdown-item" href="/grn/list">View</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                    <c:if test="${pageContext.request.userPrincipal.name != null}">
+                        <form id="logoutForm" method="POST" action="${contextPath}/logout">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+                        <span class="nav-link" >Welcome ${pageContext.request.userPrincipal.name} |
+                            <a  onclick="document.forms['logoutForm'].submit()">Logout</a>
+                        </span>
+                    </c:if>
+            </li>
+
         </ul>
     </div>
 </nav>
 </body>
 </html>
+

@@ -9,13 +9,18 @@
             margin-top: 10px;
         }
 
-        input[type=text] input[type=select] {
-            width: 300px !important;
-            height: 35px !important;
+        body{
+            height: 100vh;
         }
     </style>
 </head>
-<div class="container">
+<div class="container h-100 d-flex">
+    <div class="m-auto" style="height: 400px;width: 700px;">
+        <div class="card">
+            <div class="card-header">
+                Supplier
+            </div>
+            <div class="card-body">
     <form:form method="POST" action="/supplier/save" modelAttribute="supplier">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="supplier">Name :</label>
@@ -46,4 +51,7 @@
             <input type="submit" class="btn btn-primary" id="saveButton" value="Save"/>
         </div>
     </form:form>
+</div>
+        </div>
+    </div>
 </div>
