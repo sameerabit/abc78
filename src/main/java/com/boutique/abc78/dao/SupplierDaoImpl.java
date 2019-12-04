@@ -24,6 +24,7 @@ public class SupplierDaoImpl implements SupplierDao {
     public List<Supplier> getAllSuppliers() {
         EntityManager em = entityManagerFactory.createEntityManager();
         List<Supplier> supplierList = em.createQuery("SELECT s FROM Supplier s").getResultList();
+        em.close();
         return supplierList;
     }
 
@@ -33,6 +34,7 @@ public class SupplierDaoImpl implements SupplierDao {
         Query query = em.createQuery("SELECT s FROM Supplier s where s.name LIKE :name");
         query.setParameter("name", "%" + name + "%");
         List<Supplier> supplierList = query.getResultList();
+        em.close();
         return supplierList;
     }
 
@@ -40,8 +42,13 @@ public class SupplierDaoImpl implements SupplierDao {
     public Supplier save(Supplier supplier) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-        em.persist(supplier);
+        if(supplier.getId() != null){
+            em.merge(supplier);
+        }else{
+            em.persist(supplier);
+        }
         em.getTransaction().commit();
+        em.close();
         return supplier;
     }
 
@@ -51,6 +58,7 @@ public class SupplierDaoImpl implements SupplierDao {
         Query query = em.createQuery("SELECT c FROM Supplier c where c.id = :id");
         query.setParameter("id", supplierId );
         Supplier supplier = (Supplier) query.getSingleResult();
+        em.close();
         return supplier;
     }
 }

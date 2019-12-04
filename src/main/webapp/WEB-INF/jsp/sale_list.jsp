@@ -9,18 +9,25 @@
     <div class="card">
         <div class="card-header">
             Sales
+            <a href="/category/" class="btn btn-info pull-right" >New Sale</a>
         </div>
         <div class="card-body">
             <form action="/category/list">
                 <div class="form-group row">
-                    <div class="col-sm-6 mx-auto">
-                        <input class="form-control" type="text" name="search">
+                    <dov class="col-1">
+                        <lable>Start</lable>
+                    </dov>
+                    <div class="col-4">
+                        <input class="form-control"  type="date" placeholder="Start" >
                     </div>
-                    <div class="col">
+                    <dov class="col-1">
+                        <lable>End</lable>
+                    </dov>
+                    <div class="col-4">
+                        <input class="form-control"  type="date" placeholder="End" >
+                    </div>
+                    <div class="col-2">
                         <input type="submit" class="btn btn-info" value="Search">
-                    </div>
-                    <div class="col text-right">
-                        <a href="/category/" class="btn btn-info" >New Sale</a>
                     </div>
                 </div>
             </form>

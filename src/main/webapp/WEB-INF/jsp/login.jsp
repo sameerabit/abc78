@@ -21,13 +21,24 @@
     <div class="container-fluid h-100">
         <div class="row justify-content-center align-items-center h-100">
             <div class="container">
+                <div class="row">
+                    <div class="col text-center my-5">
+                        <h1>ABC<span class="text-danger">78</span> BOUTIQUE SHOP</h1>
+                    </div>
+                    
+                </div>
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-header">Login</div>
 
                             <div class="card-body">
-                                <span>${message}</span>
+                                <div class="row">
+                                    <div class="col-12 text-center m-2">
+                                        <span class="text-info">${message}</span>
+
+                                    </div>
+                                </div>
                                 <form method="POST" action="${contextPath}/login">
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                     <div class="form-group row ${error != null ? 'has-error' : ''}">
@@ -45,9 +56,9 @@
 
                                         <div class="col-md-6">
                                             <input id="password" type="password" class="form-control" name="password" required="">
+                                            <span class="text-danger">${error}</span>
 
                                         </div>
-                                        <span>${error}</span>
 
                                     </div>
 

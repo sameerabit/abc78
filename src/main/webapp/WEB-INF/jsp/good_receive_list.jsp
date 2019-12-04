@@ -5,12 +5,35 @@
 <html>
 
 <body>
-<div class="container">
-<div class="float-none">
-    <h5>Good Receive Note List</h5>
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header">
+            Good Receive Notes
+            <a href="/category/" class="btn btn-info pull-right" >Add New Order</a>
 
-</div>
-<table class="table" style="width: 80%">
+        </div>
+        <div class="card-body">
+            <form action="/category/list">
+                <div class="form-group row">
+                    <dov class="col-1">
+                        <lable>Start</lable>
+                    </dov>
+                    <div class="col-4">
+                        <input class="form-control"  type="date" placeholder="Start" >
+                    </div>
+                    <dov class="col-1">
+                        <lable>End</lable>
+                    </dov>
+                    <div class="col-4">
+                        <input class="form-control"  type="date" placeholder="End" >
+                    </div>
+                    <div class="col-2">
+                        <input type="submit" class="btn btn-info" value="Search">
+                    </div>
+                </div>
+            </form>
+
+<table class="table">
     <thead class="thead-light">
     <tr>
         <th scope="col">#</th>
@@ -31,6 +54,9 @@
     </c:forEach>
     </tbody>
 </table>
+
+        </div>
+    </div>
 
 </div>
 

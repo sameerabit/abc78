@@ -17,4 +17,6 @@ public interface ItemDao {
 
     public int delete(int id);
 
+    public List getAllItemsForReport();
+
 }

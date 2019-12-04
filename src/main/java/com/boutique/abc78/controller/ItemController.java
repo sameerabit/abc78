@@ -1,12 +1,9 @@
 package com.boutique.abc78.controller;
 
-import com.boutique.abc78.model.Customer;
 import com.boutique.abc78.model.Item;
 import com.boutique.abc78.model.ItemCategory;
-import com.boutique.abc78.model.Sale;
 import com.boutique.abc78.service.ItemCategoryService;
 import com.boutique.abc78.service.ItemService;
-import com.boutique.abc78.validator.CategoryValidator;
 import com.boutique.abc78.validator.ItemValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,6 +40,13 @@ public class ItemController {
         List<Item> items = itemService.getAllItems();
         model.addAttribute("items", items);
         return  "item_list";
+    }
+
+    @RequestMapping("/stock")
+    public String getAllItemsForReport(Model model){
+        List items = itemService.getAllItemsForReport();
+        model.addAttribute("items", items);
+        return "stock";
     }
 
     @RequestMapping("/")

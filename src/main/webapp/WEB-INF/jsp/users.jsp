@@ -5,28 +5,46 @@
 <html>
 
 <body>
-<div class="container">
-<div class="float-none">
-    <h5>Users</h5>
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header">
+            Supplier List
+            <a href="/user" class="btn btn-info pull-right">New User</a>
 
-</div>
-<table class="table" style="width: 80%">
-    <thead class="thead-light">
-    <tr>
-        <th scope="col">User Name</th>
-        <th scope="col">#</th>
+        </div>
 
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${users}" var="user">
-        <tr>
-            <td>${user.username}</td>
-            <td><a href="/user/edit/${user.username}">Update Password</a></td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
+        <div class="card-body">
+            <form action="/item/list">
+                <div class="form-group row">
+                    <div class="col-sm-6 mx-auto">
+                        <input class="form-control" type="text" name="search">
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="btn btn-info" value="Search">
+                    </div>
+                </div>
+            </form>
+            <table class="table" >
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">User Name</th>
+                    <th scope="col">User Role</th>
+                    <th scope="col">#</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${users}" var="user">
+                    <tr>
+                        <td>${user.username}</td>
+                        <td>${user.role.name}</td>
+                        <td><a href="/user/edit/${user.username}">Update Password</a></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 
 </div>
 

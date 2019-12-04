@@ -25,7 +25,7 @@ public class GoodReceiveDaoImpl implements GoodReceiveDao {
     public GoodReceiveNote save(GoodReceiveNote goodReceiveNote) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-        em.persist(goodReceiveNote);
+        em.merge(goodReceiveNote);
         em.getTransaction().commit();
         em.close();
         return goodReceiveNote;

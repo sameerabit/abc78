@@ -5,18 +5,8 @@
 <html>
 <head>
     <style type="text/css">
-        div.container {
-            width: 70%;
-            margin-top: 10px;
-        }
-
-        input[type=text] {
-            width: 300px !important;
-            height: 35px !important;
-        }
-
-        .alert{
-            display: none;
+        .ui-dialog {
+            width: 600px !important;
         }
 
     </style>
@@ -26,6 +16,9 @@
         var table;
         var selectedRow;
         $(function () {
+
+            var token = $('#_csrf_token').val();
+
 
             $("#orderDate").datepicker();
             $("#orderDate").datepicker("option", "dateFormat", "yy-mm-dd");
@@ -55,6 +48,9 @@
                 source: function (request, response) {
                     $.ajax({
                         url: "/supplier/getSuppliersByNameLike",
+                        headers: {
+                            "X-CSRF-TOKEN":token
+                        },
                         data: {
                             name: request.term
                         },
@@ -77,6 +73,9 @@
                 source: function (request, response) {
                     $.ajax({
                         url: "/item/getItemsNameLike",
+                        headers: {
+                            "X-CSRF-TOKEN":token
+                        },
                         data: {
                             name: request.term
                         },
@@ -169,8 +168,12 @@
 
             var goodReceiveNoteId = $('#goodReceiveNoteId').val();
             if (goodReceiveNoteId != "") {
+                var token = $('#_csrf_token').val();
                 $.ajax({
                     url: "/api/grn/show",
+                    headers: {
+                        "X-CSRF-TOKEN":token
+                    },
                     data: {grnId: goodReceiveNoteId},
                     success: function (goodReceiveNote) {
                         $("#orderDate").datepicker("setDate", new Date(goodReceiveNote.orderDate));
@@ -232,6 +235,7 @@
                 goodReceiveNoteId = $('#goodReceiveNoteId').val();
                 supplier = $('#supplier').val();
                 orderDate = $('#orderDate').val();
+                var token = $('#_csrf_token').val();
                 var postdata = {};
                 postdata =  {
                     id: goodReceiveNoteId,
@@ -243,6 +247,9 @@
                 };
                 $.ajax({
                     type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN":token
+                    },
                     url: "/api/grn/save",
                     contentType: "application/json; charset=utf-8",
                     dataType: 'json',
@@ -259,21 +266,21 @@
 <body>
 <form id="dialog" title="Add Item">
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="item">Item:</label>
+        <label class="col-sm-4 col-form-label" for="item">Item:</label>
         <input type="hidden" class="form-control" id="item_id"/>
         <input type="hidden" class="form-control" id="item_index"/>
-        <input class="form-control" type="text" id="item"/>
+        <input class="form-control col-sm-8" type="text" id="item"/>
         <%--this is important    &lt;%&ndash;<form:select id="supplier" class="form-control" path="supplier.id" items="${supplierList}" itemValue="id" itemLabel="name" />&ndash;%&gt;--%>
         <%--<form:option value="supplier.id">supplier.name</form:option>--%>
         <%--<form:options items="${supplierList}" />--%>
     </div>
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="price">Buying Price : </label>
-        <input class="form-control" id="price" type="number"/>
+        <label class="col-sm-4 col-form-label" for="price">Buying Price : </label>
+        <input class="form-control col-sm-8" id="price" type="number"/>
     </div>
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="qty">Quantity : </label>
-        <input class="form-control" id="qty" type="number"/>
+        <label class="col-sm-4 col-form-label" for="qty">Quantity : </label>
+        <input class="form-control col-sm-8" id="qty" type="number"/>
     </div>
     <div class="form-group row float-right">
         <input type="button" id="addItem" value="Add">
@@ -295,16 +302,18 @@
     <form:form method="POST" action="/goodReceiveNote/save" modelAttribute="goodReceiveNote">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="supplier">Supplier:</label>
-            <div class="col-sm-10">
+            <div class="col-sm-4">
                 <form:input type="text" class="form-control" id="supplier_name" path="supplier.name"/>
                 <form:input type="hidden" class="form-control" id="supplier" path="supplier.id"/>
                 <form:input type="hidden" class="form-control" id="goodReceiveNoteId" path="id"/>
+                <input id="_csrf_token" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="orderDate">Date:</label>
             <fmt:formatDate type="date" value="${goodReceiveNote.orderDate}" var="orderDate"/>
-            <div class="col-sm-10">
+            <div class="col-sm-4">
                 <form:input id="orderDate" class="datepicker form-control" path="orderDate"/>
             </div>
         </div>
@@ -325,13 +334,17 @@
             <th></th>
             <th></th>
             <th></th>
-
         </tr>
         </thead>
         <tfoot>
         <tr>
-            <th colspan="5">Total</th>
+            <th colspan="3">Total</th>
             <th id="total"></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+
         </tr>
         </tfoot>
     </table>

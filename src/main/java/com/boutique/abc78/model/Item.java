@@ -2,6 +2,7 @@ package com.boutique.abc78.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 public class Item {
@@ -18,6 +19,9 @@ public class Item {
 
     @ManyToOne(fetch = FetchType.LAZY,targetEntity = ItemCategory.class)
     private ItemCategory itemCategory;
+
+    @OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ItemBatch> itemBatches;
 
     public Integer getId() {
         return id;
@@ -60,5 +64,11 @@ public class Item {
     }
 
 
+    public List<ItemBatch> getItemBatches() {
+        return itemBatches;
+    }
 
+    public void setItemBatches(List<ItemBatch> itemBatches) {
+        this.itemBatches = itemBatches;
+    }
 }

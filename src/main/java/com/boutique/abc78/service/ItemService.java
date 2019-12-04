@@ -46,4 +46,8 @@ public class ItemService {
         return itemDao.delete(id);
     }
 
+    public List getAllItemsForReport() {
+        return itemDao.getAllItemsForReport();
+    }
+
 }

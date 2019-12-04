@@ -30,6 +30,14 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
+    public List<Item> getAllItemsForReport() {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        List itemList = em.createQuery("SELECT c,sum(ib.quantity) FROM Item c INNER JOIN ItemBatch ib ON ib.item.id = c.id group by c.id").getResultList();
+        em.close();
+        return itemList;
+    }
+
+    @Override
     public List<Item> getItemByNameLike(String name) {
         EntityManager em = entityManagerFactory.createEntityManager();
         Query query = em.createQuery("SELECT c FROM Item c where c.name LIKE :name");
@@ -43,7 +51,11 @@ public class ItemDaoImpl implements ItemDao {
     public Item save(Item item) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-        em.persist(item);
+        if(item.getId() == null){
+            em.persist(item);
+        }else{
+            em.merge(item);
+        }
         em.getTransaction().commit();
         em.close();
         return item;

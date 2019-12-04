@@ -15,7 +15,11 @@
     <link rel="stylesheet" href="/webjars/datatables/1.10.12/media/css/jquery.dataTables.min.css">
     <script src="/webjars/datatables/1.10.12/media/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="/webjars/font-awesome/3.2.1/css/font-awesome.min.css">
-
+    <style type="text/css">
+        h5 a {
+            color: black !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -85,8 +89,8 @@
                     Users
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/grn/">Create</a>
-                    <a class="dropdown-item" href="/grn/list">View</a>
+                    <a class="dropdown-item" href="/user">Create</a>
+                    <a class="dropdown-item" href="/users">View</a>
                 </div>
             </li>
             <li class="nav-item">
@@ -103,6 +107,64 @@
         </ul>
     </div>
 </nav>
+<%--&lt;%&ndash;<c:if test="${ empty paramValues }" >&ndash;%&gt;--%>
+<%--<div class="row">--%>
+    <%--<div class="col-4">--%>
+        <%--<div class="card text-white bg-danger m-5" >--%>
+            <%--<div class="card-body">--%>
+                <%--<h5 class="card-title"><a href="/item/stock">Stocks</a></h5>--%>
+                <%--<p class="card-text"></p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="col-4">--%>
+        <%--<div class="card text-white bg-info m-5" >--%>
+            <%--<div class="card-body">--%>
+                <%--<h5 class="card-title"><a href="/item/stock">Sales</a></h5>--%>
+                <%--<p class="card-text"></p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="col-4">--%>
+        <%--<div class="card text-white bg-primary m-5" >--%>
+            <%--<div class="card-body">--%>
+                <%--<h5 class="card-title"><a href="/item/stock">Purchases</a></h5>--%>
+                <%--<p class="card-text"></p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+    <%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
+
+<%--</div>--%>
+
+<%--<div class="row">--%>
+    <%--<div class="col-4">--%>
+        <%--<div class="card text-white bg-info m-5" >--%>
+            <%--<div class="card-body">--%>
+                <%--<h5 class="card-title"><a href="/item/stock">Expenses</a></h5>--%>
+                <%--<p class="card-text"></p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="col-4">--%>
+        <%--<div class="card text-white bg-success m-5" >--%>
+            <%--<div class="card-body">--%>
+                <%--<h5 class="card-title"><a href="/item/stock">Fast Moving Items</a></h5>--%>
+                <%--<p class="card-text"></p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="col-4">--%>
+        <%--<div class="card text-white bg-warning m-5" >--%>
+            <%--<div class="card-body">--%>
+                <%--<h5 class="card-title"><a href="/item/stock">Profit</a></h5>--%>
+                <%--<p class="card-text"></p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+    <%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
+
+</div>
 </body>
 </html>
 

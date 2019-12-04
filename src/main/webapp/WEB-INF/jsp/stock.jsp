@@ -8,9 +8,8 @@
 <div class="container my-5">
     <div class="card">
         <div class="card-header">
-            Supplier List
+            Item Stock Report
         </div>
-
         <div class="card-body">
             <form action="/item/list">
                 <div class="form-group row">
@@ -21,39 +20,32 @@
                         <input type="submit" class="btn btn-info" value="Search">
                     </div>
                     <div class="col text-right">
-                        <a href="/item/" class="btn btn-info" >New Supplier</a>
+                        <a href="/item/" class="btn btn-info" >PRINT</a>
                     </div>
                 </div>
             </form>
-<table class="table">
-    <thead class="thead-light">
-    <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Address</th>
-        <th scope="col">Email</th>
-        <th scope="col">Tel No</th>
-        <th scope="col">Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${suppliers}" var="supplier">
+    <table class="table m-auto">
+        <thead class="thead-light">
         <tr>
-            <td>${supplier.name}</td>
-            <td>${supplier.address}</td>
-            <td>${supplier.email}</td>
-            <td>${supplier.telNo}</td>
-            <td>
-                <a href="/supplier/show/${supplier.id}">View</a>
-                <a href="/supplier/delete/${item.id}">Delete</a>
-
-            </td>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Quantity</th>
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
-
+        </thead>
+        <tbody>
+        <c:forEach items="${items}" var="item">
+            <tr>
+                <td>${item[0].name}</td>
+                <td>${item[0].itemCategory.name}</td>
+                <td>${item[1]}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
         </div>
+
     </div>
+
 
 </div>
 

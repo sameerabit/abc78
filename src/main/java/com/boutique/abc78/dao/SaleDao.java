@@ -10,6 +10,7 @@ public interface SaleDao {
 
     List<Sale> getAllSales();
 
+
     Sale getSale(Integer saleId);
 
     void removeSaleOrderDetails(Integer saleId);

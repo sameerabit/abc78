@@ -1,5 +1,6 @@
 package com.boutique.abc78.service;
 
+import com.boutique.abc78.model.Role;
 import com.boutique.abc78.model.User;
 import com.boutique.abc78.repository.RoleRepository;
 import com.boutique.abc78.repository.UserRepository;
@@ -22,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<>(roleRepository.findAll()));
+      //  user.setRole(new HashSet<>(roleRepository.findAll()));
         userRepository.save(user);
     }
 
@@ -33,6 +34,10 @@ public class UserServiceImpl implements UserService {
 
     public List<User> findAll(){
         return this.userRepository.findAll();
+    }
+
+    public List<Role> getRoles(){
+        return roleRepository.findAll();
     }
 
 }
