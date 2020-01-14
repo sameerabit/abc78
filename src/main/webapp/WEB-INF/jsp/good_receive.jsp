@@ -295,10 +295,7 @@
     </div>
 </div>
 <div class="container">
-    <div class="alert alert-success alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        Good Receive Note Successfully Saved !
-    </div>
+
     <form:form method="POST" action="/goodReceiveNote/save" modelAttribute="goodReceiveNote">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="supplier">Supplier:</label>

@@ -15,7 +15,7 @@ public class Expense {
 
     private String name;
 
-    @DateTimeFormat(pattern = "yy/mm/dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
 

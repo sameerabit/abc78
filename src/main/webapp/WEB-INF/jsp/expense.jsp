@@ -3,20 +3,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
-    <style type="text/css">
-        div.container {
-            width: 70%;
-            margin-top: 10px;
-        }
 
-        input[type=text] input[type=select] {
-            width: 300px !important;
-            height: 35px !important;
-        }
-    </style>
+    <script>
+
+        $(function () {
+
+          //  $("#date").datepicker();
+       //     $("#date").datepicker().datepicker("setDate", new Date());
+         //   $("#date").datepicker("option", "dateFormat", "yy-MM-dd");
+       //     $("#date").datepicker().datepicker("setDate",$('#date').val());
+         //   debugger;
+        });
+    </script>
 </head>
 <div class="container">
-    <form:form method="POST" action="/expense/save" modelAttribute="expense">
+    <form:form method="POST" action="/expenses/save" modelAttribute="expense">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="expense_name">Name :</label>
             <div class="col-sm-10">
@@ -26,12 +27,16 @@
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="date">Date:</label>
+            <fmt:formatDate type="date" value="${expense.date}" var="date" pattern="yyyy-MM-dd"/>
             <div class="col-sm-10">
-                <form:input type="date" class="form-control" id="date" path="date"/>
+                <form:input type="date" id="date" class="form-control" path="date"/>
             </div>
         </div>
-        <div style="float: right;margin-bottom: 10px;">
-            <input type="submit" class="btn btn-primary" id="saveButton" value="Save"/>
+        <div class="form-group row">
+            <div class="col">
+                <input type="submit" class="btn btn-primary" id="saveButton" value="Save"/>
+            </div>
         </div>
+
     </form:form>
 </div>

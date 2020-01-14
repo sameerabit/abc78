@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -41,11 +42,13 @@ public class ItemCategoryController {
     }
 
     @RequestMapping(value="/save", method=RequestMethod.POST)
-    public String save(@Valid @ModelAttribute("itemCategory")ItemCategory itemCategory, BindingResult bindingResult){
+    public String save(@Valid @ModelAttribute("itemCategory")ItemCategory itemCategory,
+                       BindingResult bindingResult, RedirectAttributes redirectAttributes){
         categoryValidator.validate(itemCategory, bindingResult);
         if (bindingResult.hasErrors()) {
             return "category";
         }
+        redirectAttributes.addFlashAttribute("SUCCESS_MESSAGE","Category successfully saved");
         itemCategory = itemCategoryService.save(itemCategory);
         return "redirect:/category/show/"+itemCategory.getId();
     }
@@ -58,8 +61,9 @@ public class ItemCategoryController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String delete(@PathVariable("id") Integer id,Model model){
+    public String delete(@PathVariable("id") Integer id,Model model,RedirectAttributes redirectAttributes){
         int res = itemCategoryService.delete(id);
+        redirectAttributes.addFlashAttribute("SUCCESS_MESSAGE","Category successfully deleted");
         return "redirect:/category/list/";
 
     }

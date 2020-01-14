@@ -20,19 +20,21 @@
     </style>
 </head>
 <div class="container h-100 d-flex">
+
     <div class="m-auto" style="height: 400px;width: 500px;">
     <div class="card">
         <div class="card-header">
             Category
         </div>
         <div class="card-body">
+
             <form:form method="POST" action="/category/save" modelAttribute="itemCategory">
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label" for="itemCategory">Name :</label>
                     <div class="col-sm-8">
                         <form:input type="text" class="form-control" id="name" path="name"/>
                         <form:input type="hidden" class="form-control" id="id" path="id"/>
-                        <form:errors path="name"></form:errors>
+                        <form:errors cssClass="text-danger" path="name"></form:errors>
 
                     </div>
                 </div>

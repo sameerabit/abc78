@@ -71,8 +71,8 @@
                     Expenses
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/expense/">Create</a>
-                    <a class="dropdown-item" href="/expense/list">View</a>
+                    <a class="dropdown-item" href="/expenses/">Create</a>
+                    <a class="dropdown-item" href="/expenses/list">View</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -107,6 +107,21 @@
         </ul>
     </div>
 </nav>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col">
+            <c:if test="${SUCCESS_MESSAGE != null}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        ${SUCCESS_MESSAGE}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </c:if>
+        </div>
+    </div>
+</div>
 <%--&lt;%&ndash;<c:if test="${ empty paramValues }" >&ndash;%&gt;--%>
 <%--<div class="row">--%>
     <%--<div class="col-4">--%>
