@@ -3,6 +3,7 @@ package com.boutique.abc78.service;
 import com.boutique.abc78.dao.ItemBatchDaoImpl;
 import com.boutique.abc78.dao.SaleDaoImpl;
 import com.boutique.abc78.model.Customer;
+import com.boutique.abc78.model.Payment;
 import com.boutique.abc78.model.Sale;
 import com.boutique.abc78.model.SaleOrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public class SaleService {
             itemBatchDao.reduceQuantityForSales(saleOrderDetail);
         }
         return sale;
+    }
+
+    public Payment pay(Payment payment){
+        return this.saleDao.pay(payment);
     }
 
     public List<Sale> getAllSales(){

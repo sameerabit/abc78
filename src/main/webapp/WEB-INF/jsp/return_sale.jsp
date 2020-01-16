@@ -165,17 +165,11 @@
                         "data": null,
                         "defaultContent": "<button class='btn'><i class=\"icon-remove\"></i></button>"
                     },
-                    {
-                        "targets": [8],
-                        "data": null,
-                        "defaultContent": "<button class='btn show'>Show</button>"
-                    },
                 ]
             });
 
 
             var saleId = $('#saleId').val();
-
             if (saleId != "") {
                 $.ajax({
                     headers: {
@@ -199,8 +193,6 @@
                         });
                     },
                 });
-            }else{
-                $('#returnSaleButton').hide();
             }
 
             $('#employeesTable tbody').on('click', '.show', function () {
@@ -350,12 +342,10 @@
     <div class="container mt-3">
 
         <div class="row">
-            <div class="col-4-offset col text-center">
-                <h3>Sales Order</h3>
+            <div class="col text-center">
+                <h3>Return Sales</h3>
             </div>
-            <div class="col text-left">
-                <a id="returnSaleButton" class="btn btn-warning" href="/sale/return/${sale.id}">Return</a>
-            </div>
+
         </div>
     </div>
 <div class="container mt-5">
@@ -363,7 +353,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="customer">Customer:</label>
             <div class="col-sm-4">
-                <form:input type="text" class="form-control" id="customer_name" path="customer.name"/>
+                <form:input type="text" disabled="disabled" class="form-control" id="customer_name" path="customer.name"/>
                 <form:input type="hidden" class="form-control" id="customer" path="customer.id"/>
                 <form:input type="hidden" class="form-control" id="saleId" path="id"/>
                 <input id="_csrf_token" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -373,13 +363,12 @@
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="orderDate">Date:</label>
-            <fmt:formatDate type="date" value="${sale.orderDate}" var="orderDate"/>
+            <fmt:formatDate type="date"   value="${sale.orderDate}" var="orderDate"/>
             <div class="col-sm-4">
-                <form:input id="orderDate" class="datepicker form-control" path="orderDate"/>
+                <form:input id="orderDate" disabled="disabled" class="datepicker form-control" path="orderDate"/>
             </div>
         </div>
         <div style="float: right;margin-bottom: 10px;">
-            <input type="button" id="addRow" class="btn btn-primary" value="Add Row"/>
             <input type="button" class="btn btn-primary" id="saveButton" value="Submit"/>
         </div>
     </form:form>
@@ -390,9 +379,9 @@
             <th>Item</th>
             <th>Price</th>
             <th>Qty</th>
+            <th>Returned Qty</th>
             <th>Discount</th>
             <th class="sum">Total</th>
-            <th></th>
             <th></th>
             <th></th>
             <th></th>
@@ -402,11 +391,11 @@
         <tfoot>
         <tr>
             <th style="text-align:right">Discount:<input type="number" id="totalDiscount" value="0"></th>
+            <th id="returnedTotal">0.00</th>
             <th>Discount Total</th>
             <th id="discountedPrice">0.00</th>
             <th style="text-align:right">Total</th>
             <th id="total"></th>
-            <th></th>
             <th></th>
             <th></th>
             <th></th>
@@ -417,65 +406,7 @@
 </div>
 
 
-    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Pay Bill</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="paymentForm">
-                        <div class="form-group">
-                            <legend class="col-form-label col-sm-2 pt-0">Method</legend>
-                            <div class="col-sm-10">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="method" id="cash" value="cash" checked>
-                                    <label class="form-check-label" for="cash">
-                                        Cash
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="method" id="credit" value="credit">
-                                    <label class="form-check-label" for="credit">
-                                        Credit
-                                    </label>
-                                </div>
-                                <div class="form-check disabled">
-                                    <input class="form-check-input" type="radio" name="method" id="both" value="both">
-                                    <label class="form-check-label" for="both">
-                                        Cash & Credit
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="cash" class="col-form-label">Cash:</label>
-                            <input type="number" class="form-control" name="cash" id="cash">
-                            <input type="hidden" class="form-control" name="sale_id" id="sale_id">
-                        </div>
-                        <hr>
-                        <div class="form-group">
-                            <hr>
-                            <label for="bank" class="col-form-label">Bank</label>
-                            <input type="text" name="bank" class="form-control" id="bank">
-                        </div>
-                        <div class="form-group">
-                            <label for="credit" class="col-form-label">Credit/Debit:</label>
-                            <input type="number" name="credit" class="form-control" id="credit">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <span class="h5" id="totalBill"></span>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="payButton" type="button" class="btn btn-primary">Pay</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 </body>
 </html>

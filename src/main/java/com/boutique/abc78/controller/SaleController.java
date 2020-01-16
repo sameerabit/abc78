@@ -49,6 +49,16 @@ public class SaleController {
         return  "sale";
     }
 
+    @RequestMapping(value = "/return/{id}", method = RequestMethod.GET)
+    public String returnSale(@PathVariable("id") Integer id,Model model){
+        Sale sale = saleService.getSale(id);
+        List<Customer> allCustomers = customerService.getAllCustomers();
+        model.addAttribute("customerList",allCustomers);
+        model.addAttribute("sale", sale);
+        model.addAttribute("saleId", id);
+        return  "return_sale";
+    }
+
 
 
 

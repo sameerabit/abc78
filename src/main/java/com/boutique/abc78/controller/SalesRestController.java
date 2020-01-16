@@ -1,5 +1,6 @@
 package com.boutique.abc78.controller;
 
+import com.boutique.abc78.model.Payment;
 import com.boutique.abc78.model.Sale;
 import com.boutique.abc78.model.SaleOrderDetail;
 import com.boutique.abc78.service.SaleService;
@@ -18,7 +19,8 @@ public class SalesRestController {
     SaleService saleService;
 
     @RequestMapping(value="/save", method=RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String store(@RequestBody SalesWrapper salesWrapper){
+    @ResponseBody
+    public Sale store(@RequestBody SalesWrapper salesWrapper){
         float total = 0;
         float discount = 0;
         if(salesWrapper.getSale().getId() != null){
@@ -29,8 +31,8 @@ public class SalesRestController {
             total += saleOrderDetail.getTotal();
         }
         salesWrapper.getSale().setTotal(total);
-        saleService.save(salesWrapper.sale);
-        return "sale";
+        Sale sale = saleService.save(salesWrapper.sale);
+        return sale;
     }
 
     @RequestMapping(value="/show", method=RequestMethod.GET,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -38,5 +40,11 @@ public class SalesRestController {
     public Sale show(@RequestParam Integer sale){
         Sale saleObj = saleService.getSale(sale);
         return saleObj;
+    }
+
+    @RequestMapping(value="/pay", method=RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public Payment store(@RequestBody Payment payment){
+        return saleService.pay(payment);
     }
 }

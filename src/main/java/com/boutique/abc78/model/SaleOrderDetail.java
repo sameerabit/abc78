@@ -28,6 +28,8 @@ public class SaleOrderDetail {
 
     private Float quantity;
 
+    private Float returned;
+
     public Integer getId() {
         return id;
     }

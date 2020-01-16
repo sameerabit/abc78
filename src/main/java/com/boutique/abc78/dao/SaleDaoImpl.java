@@ -1,6 +1,7 @@
 package com.boutique.abc78.dao;
 
 import com.boutique.abc78.model.Customer;
+import com.boutique.abc78.model.Payment;
 import com.boutique.abc78.model.Sale;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,9 @@ public class SaleDaoImpl implements SaleDao {
     public Sale save(Sale sale) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-        em.merge(sale);
+        sale = em.merge(sale);
         em.getTransaction().commit();
+        em.refresh(sale);
         em.close();
         return sale;
     }
@@ -60,6 +62,16 @@ public class SaleDaoImpl implements SaleDao {
         Sale sale = (Sale) query.getSingleResult();
         sale.getSaleOrderDetail().remove(sale);
         em.close();
+    }
 
+    @Override
+    public Payment pay(Payment payment) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+        payment = em.merge(payment);
+        em.getTransaction().commit();
+        em.refresh(payment);
+        em.close();
+        return payment;
     }
 }

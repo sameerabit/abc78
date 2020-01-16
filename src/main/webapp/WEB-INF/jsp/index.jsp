@@ -14,7 +14,14 @@
 
     <link rel="stylesheet" href="/webjars/datatables/1.10.12/media/css/jquery.dataTables.min.css">
     <script src="/webjars/datatables/1.10.12/media/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+
     <link rel="stylesheet" href="/webjars/font-awesome/3.2.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
+
+
     <style type="text/css">
         h5 a {
             color: black !important;
@@ -24,7 +31,7 @@
 
 <body>
 <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">ABC78 BOTIQUES</a>
+    <%--<a class="navbar-brand" href="#">ABC78 BOTIQUES</a>--%>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>

@@ -1,5 +1,6 @@
 package com.boutique.abc78.dao;
 
+import com.boutique.abc78.model.Payment;
 import com.boutique.abc78.model.Sale;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface SaleDao {
     Sale getSale(Integer saleId);
 
     void removeSaleOrderDetails(Integer saleId);
+
+    Payment pay(Payment payment);
 }

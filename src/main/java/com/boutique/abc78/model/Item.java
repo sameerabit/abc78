@@ -1,5 +1,7 @@
 package com.boutique.abc78.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,6 +23,7 @@ public class Item {
     private ItemCategory itemCategory;
 
     @OneToMany(mappedBy = "item", orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<ItemBatch> itemBatches;
 
     public Integer getId() {
