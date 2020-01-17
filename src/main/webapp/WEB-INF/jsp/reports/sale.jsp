@@ -11,7 +11,7 @@
             Daily Sales Report
         </div>
         <div class="card-body">
-            <form action="/report/sale">
+            <form action="/reports/daily_sale">
                 <div class="form-group row">
                     <div class="col-sm-6 mx-auto">
                         <input class="form-control" type="date" name="date">
@@ -25,30 +25,33 @@
                 </div>
             </form>
 
-            <div class="row">
-                <div class="col-6">
-                    <h6>#ID: ${sale.id}</h6>
-                    <h6>#Date: ${sale.orderDate}</h6>
-                </div>
-                <div class="col-6">
-                    <h6>#ID: ${sale.customer.name}</h6>
-                </div>
-            </div>
             <table class="table m-auto">
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Category</th>
+                    <th scope="col">Selling Price</th>
+                    <th scope="col">Buying Price</th>
                     <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Discount</th>
+
                 </tr>
                 </thead>
                 <tbody>
+                <c:forEach items="${saleList}" var="sale">
                 <c:forEach items="${sale.saleOrderDetail}" var="item">
+                    <c:forEach items="${item.itemBatches}" var="batch">
                     <tr>
                         <td>${item.item.name}</td>
-                        <%--<td>${item[0].itemCategory.name}</td>--%>
-                        <%--<td>${item[1]}</td>--%>
+                        <td>${item.price}</td>
+                        <td>${batch.buyingPrice}</td>
+                        <td>${item.quantity}</td>
+                        <td>${item.total}</td>
+                        <td>${item.discount}</td>
                     </tr>
+                    </c:forEach>
+
+                </c:forEach>
                 </c:forEach>
                 </tbody>
             </table>

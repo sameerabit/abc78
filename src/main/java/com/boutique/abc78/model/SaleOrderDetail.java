@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class SaleOrderDetail {
@@ -19,6 +21,16 @@ public class SaleOrderDetail {
 
     @ManyToOne(targetEntity = Item.class)
     private Item item;
+
+
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JsonIgnore
+    @JoinTable(
+            name = "sales_batches",
+            joinColumns = { @JoinColumn(name = "item_batch_id") },
+            inverseJoinColumns = { @JoinColumn(name = "sale_order_detail_id") }
+    )
+    private Set<ItemBatch> itemBatches = new HashSet<>();
 
     private Float price;
 
@@ -84,5 +96,22 @@ public class SaleOrderDetail {
 
     public void setQuantity(Float quantity) {
         this.quantity = quantity;
+    }
+
+
+    public Float getReturned() {
+        return returned;
+    }
+
+    public void setReturned(Float returned) {
+        this.returned = returned;
+    }
+
+    public Set<ItemBatch> getItemBatches() {
+        return itemBatches;
+    }
+
+    public void setItemBatches(Set<ItemBatch> itemBatches) {
+        this.itemBatches = itemBatches;
     }
 }

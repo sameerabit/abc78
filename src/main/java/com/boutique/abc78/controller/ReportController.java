@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(value = "/reports")
 public class ReportController {
@@ -19,8 +21,11 @@ public class ReportController {
 
     @RequestMapping("/daily_sale")
     public String index(Model model,@RequestParam(defaultValue="") String date){
-        Sale sale = reportService.getDailySale(date);
-        model.addAttribute("sale",sale);
+        if(date.isEmpty()){
+            return "reports/sale";
+        }
+        List<Sale> saleList = reportService.getDailySale(date);
+        model.addAttribute("saleList",saleList);
         return  "reports/sale";
     }
 

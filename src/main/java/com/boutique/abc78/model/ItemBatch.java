@@ -6,6 +6,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class ItemBatch {
@@ -30,6 +32,16 @@ public class ItemBatch {
     @DateTimeFormat(pattern = "yy/mm/dd")
     private Date date;
 
+    @ManyToMany(mappedBy = "itemBatches")
+    Set<SaleOrderDetail> saleOrderDetails = new HashSet<>();
+
+    public Set<SaleOrderDetail> getSaleOrderDetails() {
+        return saleOrderDetails;
+    }
+
+    public void setSaleOrderDetails(Set<SaleOrderDetail> saleOrderDetails) {
+        this.saleOrderDetails = saleOrderDetails;
+    }
 
     public Integer getId() {
         return id;
