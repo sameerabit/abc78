@@ -35,8 +35,11 @@ public class UserController {
     }
 
     @RequestMapping("/registration")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult,
+                               Model model) {
         userValidator.validate(userForm, bindingResult);
+        List<Role> roles = userService.getRoles();
+        model.addAttribute("roles",roles);
 
         if (bindingResult.hasErrors()) {
             return "registration";

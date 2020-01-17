@@ -23,7 +23,7 @@ public class ItemBatch {
     private Item item;
 
 
-    @ManyToOne(targetEntity = GoodReceiveNote.class,cascade = { CascadeType.REMOVE,CascadeType.ALL })
+    @ManyToOne(targetEntity = GoodReceiveNote.class,cascade = { CascadeType.REMOVE })
     @JsonIgnore
     private GoodReceiveNote goodReceiveNote;
 

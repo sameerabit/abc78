@@ -21,7 +21,7 @@ public class GoodReceiveService {
 
 
     public GoodReceiveNote save(GoodReceiveNote goodReceiveNote){
-       // goodReceiveNote = this.goodReceiveDao.save(goodReceiveNote);
+        goodReceiveNote = this.goodReceiveDao.save(goodReceiveNote);
 
         for (GoodReceiveNoteDetail goodReceiveNoteDetail : goodReceiveNote.getGoodReceiveNoteDetail()) {
             ItemBatch itemBatch = new ItemBatch();
@@ -31,7 +31,6 @@ public class GoodReceiveService {
             itemBatch.setItem(goodReceiveNoteDetail.getItem());
             itemBatch.setQuantity(goodReceiveNoteDetail.getQuantity());
             itemBatchDao.save(itemBatch);
-
         }
         return goodReceiveNote;
     }

@@ -99,9 +99,12 @@
                 },
                 minLength: 1,
                 select: function (event, ui) {
+                    console.log(ui);
                     event.preventDefault();
                     $('#item_id').val(ui.item.value);
                     $('#item').val(ui.item.label);
+                    $('#stock').html(ui.item.stock);
+
                 }
             });
 
@@ -329,6 +332,10 @@
             <input class="form-control col-8" type="text" id="item"/>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
+        </div>
+        <div class="form-group row">
+            <label class="col-4 col-form-label" for="price">Stock : </label>
+            <span id="stock"></span>
         </div>
         <div class="form-group row">
             <label class="col-4 col-form-label" for="price">Price : </label>

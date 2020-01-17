@@ -24,7 +24,7 @@ public class GoodReceiveNote {
     private List<GoodReceiveNoteDetail> goodReceiveNoteDetail;
 
 
-    @OneToMany(mappedBy = "goodReceiveNote", orphanRemoval = true, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "goodReceiveNote", orphanRemoval = true, fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
     private List<ItemBatch> itemBatches;
 
     private String status;

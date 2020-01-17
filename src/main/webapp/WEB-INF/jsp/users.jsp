@@ -8,7 +8,7 @@
 <div class="container my-5">
     <div class="card">
         <div class="card-header">
-            Supplier List
+            User List
             <a href="/user" class="btn btn-info pull-right">New User</a>
 
         </div>
@@ -37,7 +37,7 @@
                     <tr>
                         <td>${user.username}</td>
                         <td>${user.role.name}</td>
-                        <td><a href="/user/edit/${user.username}">Update Password</a></td>
+                        <td><a href="/user/edit/${user.username}">Update</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

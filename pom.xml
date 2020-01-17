@@ -109,7 +109,10 @@
             <artifactId>d3js</artifactId>
             <version>5.9.7</version>
         </dependency>
-
+        <!--<dependency>-->
+            <!--<groupId>org.flywaydb</groupId>-->
+            <!--<artifactId>flyway-core</artifactId>-->
+        <!--</dependency>-->
 
     </dependencies>
     <build>
