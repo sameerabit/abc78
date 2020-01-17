@@ -112,30 +112,24 @@
                 item = $('#item').val();
                 price = $('#price').val();
                 qty = $('#qty').val();
-                discount = $('#discount').val();
-                returnQty = $('#returnQty').val();
-
                 itemId = $('#item_id').val();
                 table.row.add([
                     item,
                     price,
                     qty,
-                    price * (discount / 100) * qty,
-                    price * qty * (1 - (discount / 100)),
-                    returnQty,
+                    qty*price,
                     itemId,
-                    $('#sale_index').val()
+                    $('#grnd_id').val()
             ]).draw(false);
                 item = $('#item').val("");
                 price = $('#price').val("");
                 qty = $('#qty').val("");
-                discount = $('#discount').val("");
                 itemId = $('#item_id').val("");
                 $('#dialog').dialog('close');
-                var item_index = $('#item_index').val();
-                if (item_index != "") {
-                    table.row(item_index).remove().draw(false);
-                    $('#item_index').val("");
+                var grn_index = $('#item_index').val();
+                if (grn_index != "") {
+                    table.row(grn_index).remove().draw(false);
+                    $('#grn_index').val("");
                 }
             });
 
@@ -154,17 +148,17 @@
                 ],
                 "columnDefs": [
                     {
+                        "targets": [4],
+                        "visible": true,
+                        "searchable": false
+                    },
+                    {
+                        "targets": [5],
+                        "visible": true,
+                        "searchable": false
+                    },
+                    {
                         "targets": [6],
-                        "visible": true,
-                        "searchable": false
-                    },
-                    {
-                        "targets": [7],
-                        "visible": true,
-                        "searchable": false
-                    },
-                    {
-                        "targets": [8],
                         "data": null,
                         "defaultContent": "<button class='btn show'>Show</button>"
                     },
@@ -172,25 +166,22 @@
             });
 
 
-            var saleId = $('#saleId').val();
-            if (saleId != "") {
+            var grnId = $('#grnId').val();
+            if (grnId != "") {
                 $.ajax({
                     headers: {
                         "X-CSRF-TOKEN": $('#_csrf_token').val()
                     },
-                    url: "/api/sale/show",
-                    data: {sale: saleId},
-                    success: function (sale) {
-                        $("#orderDate").datepicker("setDate", new Date(sale.orderDate));
-                        $('#totalDiscount').val(sale.totalDiscount);
-                        sale.saleOrderDetail.forEach(function (row) {
+                    url: "/api/return/show",
+                    data: {grnId: grnId},
+                    success: function (grn) {
+                        $("#orderDate").datepicker("setDate", new Date(grn.returnDate));
+                        grn.goodReturnNoteDetail.forEach(function (row) {
                             table.row.add([
                                 row.item.name,
-                                row.price,
+                                row.sellingPrice,
                                 row.quantity,
-                                row.discount,
-                                row.total,
-                                0.00,
+                                row.sellingPrice * row.quantity,
                                 row.item.id,
                                 row.id,
                             ]).draw(false);
@@ -202,13 +193,11 @@
             $('#employeesTable tbody').on('click', '.show', function () {
                 var rowData = table.row($(this).parents('tr')).data();
                 console.log(rowData);
-                discount = (rowData[3] * 100) / (rowData[1] * rowData[2]);
                 item = $('#item').val(rowData[0]);
                 price = $('#price').val(rowData[1]);
                 qty = $('#qty').val(rowData[2]);
-                discount = $('#discount').val(discount);
-                itemId = $('#item_id').val(rowData[6]);
-                saleindex = $('#sale_index').val(rowData[7]);
+                itemId = $('#item_id').val(rowData[4]);
+                itemId = $('#grnd_id').val(rowData[5]);
 
                 $('#dialog').dialog('open');
                 $('#item_index').val(table.row($(this).parents('tr')).index());
@@ -234,8 +223,9 @@
                 saleTableData.forEach(function (data) {
                     var formattedRow = {};
                     formattedRow['sellingPrice'] = data[1];
-                    formattedRow['quantity'] = data[5];
-                    formattedRow['item'] = {'id': data[6]};
+                    formattedRow['quantity'] = data[2];
+                    formattedRow['item'] = {'id': data[4]};
+                    formattedRow['id'] = data[5];
                     formattedData.push(formattedRow);
                 });
                 return formattedData;
@@ -259,14 +249,12 @@
                 console.log(saleTableData);
                 formattedData = formatData(saleTableData);
                 totalDiscount = $('#totalDiscount').val();
-                saleId = $('#saleId').val();
+                grnId = $('#grnId').val();
                 customer = $('#customer').val();
                 orderDate = $('#orderDate').val();
                 var postdata = {};
                 postdata = {
-                    sale: {
-                        id: saleId
-                    },
+                    id: grnId,
                     returnDate: orderDate,
                     goodReturnNoteDetail: formattedData
                 };
@@ -296,27 +284,19 @@
         <div class="form-group row">
             <label class="col-4 col-form-label" for="item">Item:</label>
             <input type="hidden" class="form-control" id="item_id"/>
+            <input type="hidden" class="form-control" id="grnd_id"/>
             <input type="hidden" class="form-control" id="item_index"/>
-            <input type="hidden" class="form-control" id="sale_index"/>
             <input class="form-control col-8" type="text" id="item"/>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
         </div>
         <div class="form-group row">
             <label class="col-4 col-form-label" for="price">Price : </label>
-            <input class="form-control col-8" id="price" type="hidden"/>
+            <input disabled class="form-control col-8" id="price" type="text"/>
         </div>
         <div class="form-group row">
             <label class="col-4 col-form-label" for="qty">Quantity : </label>
-            <input disabled class="form-control col-8" id="qty" type="number"/>
-        </div>
-        <div class="form-group row">
-            <label class="col-4 col-form-label" for="discount">Discount : </label>
-            <input class="form-control col-8" id="discount" type="hidden"/>
-        </div>
-        <div class="form-group row">
-            <label class="col-4 col-form-label" for="returnQty">Return : </label>
-            <input class="form-control col-8" id="returnQty" type="number"/>
+            <input class="form-control col-8" id="qty" type="number"/>
         </div>
         <div class="form-group row float-right">
             <input class="btn btn-success" type="submit" id="addItem" value="Add">
@@ -327,19 +307,16 @@
 
         <div class="row">
             <div class="col text-center">
-                <h3>Create Return on Sales</h3>
+                <h3>Return Note</h3>
             </div>
 
         </div>
     </div>
 <div class="container mt-5">
-    <form:form method="POST" action="/sale/save" modelAttribute="sale">
+    <form:form method="POST" action="/sale/save" modelAttribute="grn">
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="customer">Customer:</label>
             <div class="col-sm-4">
-                <form:input type="text" disabled="disabled" class="form-control" id="customer_name" path="customer.name"/>
-                <form:input type="hidden" class="form-control" id="customer" path="customer.id"/>
-                <form:input type="hidden" class="form-control" id="saleId" path="id"/>
+                <form:input disabled="true" type="text"   class="form-control" id="grnId" path="id"/>
                 <input id="_csrf_token" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <%--<input id="_csrf_header" type="hidden" name="${_csrf.parameterName}" value="${_csrf.header}"/>--%>
 
@@ -347,25 +324,22 @@
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="orderDate">Date:</label>
-            <fmt:formatDate type="date"   value="${sale.orderDate}" var="orderDate"/>
+            <fmt:formatDate type="date"   value="${grn.returnDate}" var="returnDate"/>
             <div class="col-sm-4">
-                <form:input id="orderDate" disabled="disabled" class="datepicker form-control" path="orderDate"/>
+                <form:input id="orderDate" disabled="disabled" class="datepicker form-control" path="returnDate"/>
             </div>
         </div>
         <div style="float: right;margin-bottom: 10px;">
             <input type="button" class="btn btn-primary" id="saveButton" value="Submit"/>
         </div>
     </form:form>
-    <h5>Invoice</h5>
     <table id="employeesTable" class="display">
         <thead>
         <tr>
             <th>Item</th>
             <th>Price</th>
             <th>Qty</th>
-            <th>Discount</th>
             <th class="sum">Total</th>
-            <th>Returned Qty</th>
             <th></th>
             <th></th>
             <th></th>

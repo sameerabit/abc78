@@ -2,11 +2,8 @@ package com.boutique.abc78.controller;
 
 import com.boutique.abc78.model.GoodReceiveNote;
 import com.boutique.abc78.model.GoodReceiveNoteDetail;
-import com.boutique.abc78.model.Sale;
-import com.boutique.abc78.model.SaleOrderDetail;
+import com.boutique.abc78.model.GoodReturnNoteDetail;
 import com.boutique.abc78.service.GoodReceiveService;
-import com.boutique.abc78.service.SaleService;
-import com.boutique.abc78.wrappers.SalesWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

@@ -21,7 +21,7 @@ public class GoodReceiveNote {
 
 
     @OneToMany(mappedBy = "goodReceiveNote", orphanRemoval = true, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    private List<GoodReceiveNoteDetail> goodReceiveNoteDetails;
+    private List<GoodReceiveNoteDetail> goodReceiveNoteDetail;
 
 
     @OneToMany(mappedBy = "goodReceiveNote", orphanRemoval = true, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
@@ -54,11 +54,11 @@ public class GoodReceiveNote {
     }
 
     public List<GoodReceiveNoteDetail> getGoodReceiveNoteDetail() {
-        return goodReceiveNoteDetails;
+        return goodReceiveNoteDetail;
     }
 
     public void setGoodReceiveNoteDetails(List<GoodReceiveNoteDetail> goodReceiveNoteDetails) {
-        this.goodReceiveNoteDetails = goodReceiveNoteDetails;
+        this.goodReceiveNoteDetail = goodReceiveNoteDetails;
     }
 
     public Supplier getSupplier() {
