@@ -350,10 +350,10 @@
     <div class="container mt-3">
 
         <div class="row">
-            <div class="col-4-offset col text-center">
+            <div class="offset-4 col text-center">
                 <h3>Sales Order</h3>
             </div>
-            <div class="col text-left">
+            <div class="col text-right">
                 <a id="returnSaleButton" class="btn btn-warning" href="/sale/return/${sale.id}">Return</a>
             </div>
         </div>
