@@ -12,6 +12,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,9 +39,21 @@ public class SaleDaoImpl implements SaleDao {
     }
 
     @Override
-    public List<Sale> getAllSales() {
+    public List<Sale> getAllSales(String start,String end) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date frmDate = null;
+        Date enDate = null;
+        try {
+            frmDate = format.parse(start);
+            enDate = format.parse(end);
+        } catch (ParseException ex){
+
+        }
         EntityManager em = entityManagerFactory.createEntityManager();
-        List<Sale> saleList = em.createQuery("SELECT s FROM Sale s order by s.id desc").getResultList();
+        Query query = em.createQuery("SELECT s FROM Sale s where s.orderDate between :startDate and :endDate order by s.id desc");
+        query.setParameter("startDate", frmDate);
+        query.setParameter("endDate", enDate);
+        List<Sale> saleList =query.getResultList();
         em.close();
         return saleList;
     }

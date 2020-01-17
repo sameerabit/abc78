@@ -38,8 +38,10 @@ public class SaleController {
     }
 
     @RequestMapping("/list")
-    public String getAllSales(Model model){
-        List<Sale> allSales = saleService.getAllSales();
+    public String getAllSales(Model model,
+                              @RequestParam(defaultValue="") String start,
+                              @RequestParam(defaultValue="") String end){
+        List<Sale> allSales = saleService.getAllSales(start,end);
         model.addAttribute("saleList", allSales);
         return  "sale_list";
     }

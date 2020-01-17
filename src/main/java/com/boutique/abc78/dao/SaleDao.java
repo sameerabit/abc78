@@ -9,7 +9,7 @@ public interface SaleDao {
 
     Sale save(Sale sale);
 
-    List<Sale> getAllSales();
+    List<Sale> getAllSales(String start,String end);
 
 
     Sale getSale(Integer saleId);

@@ -9,22 +9,22 @@
     <div class="card">
         <div class="card-header">
             Sales
-            <a href="/category/" class="btn btn-info pull-right" >New Sale</a>
+            <a href="/sale/" class="btn btn-info pull-right" >New Sale</a>
         </div>
         <div class="card-body">
-            <form action="/category/list">
+            <form action="/sale/list">
                 <div class="form-group row">
                     <dov class="col-1">
                         <lable>Start</lable>
                     </dov>
                     <div class="col-4">
-                        <input class="form-control"  type="date" placeholder="Start" >
+                        <input class="form-control" id="start" name="start"  type="date" placeholder="Start" >
                     </div>
                     <dov class="col-1">
                         <lable>End</lable>
                     </dov>
                     <div class="col-4">
-                        <input class="form-control"  type="date" placeholder="End" >
+                        <input class="form-control" id="end" name="end"  type="date" placeholder="End" >
                     </div>
                     <div class="col-2">
                         <input type="submit" class="btn btn-info" value="Search">

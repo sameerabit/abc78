@@ -33,8 +33,8 @@ public class SaleService {
         return this.saleDao.pay(payment);
     }
 
-    public List<Sale> getAllSales(){
-        return this.saleDao.getAllSales();
+    public List<Sale> getAllSales(String start,String end){
+        return this.saleDao.getAllSales(start,end);
     }
 
     public Sale getSale(Integer saleId){
