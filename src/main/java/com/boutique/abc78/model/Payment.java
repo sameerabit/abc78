@@ -12,6 +12,7 @@ public class Payment {
     private Integer id;
 
     @OneToOne(targetEntity = Sale.class)
+    @JsonIgnore
     private Sale sale;
 
     private Float cash;

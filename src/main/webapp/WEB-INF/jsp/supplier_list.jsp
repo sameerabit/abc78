@@ -21,7 +21,7 @@
                         <input type="submit" class="btn btn-info" value="Search">
                     </div>
                     <div class="col text-right">
-                        <a href="/item/" class="btn btn-info" >New Supplier</a>
+                        <a href="/supplier/" class="btn btn-info" >New Supplier</a>
                     </div>
                 </div>
             </form>
@@ -44,7 +44,7 @@
             <td>${supplier.telNo}</td>
             <td>
                 <a href="/supplier/show/${supplier.id}">View</a>
-                <a href="/supplier/delete/${item.id}">Delete</a>
+                <a href="/supplier/delete/${supplier.id}">Delete</a>
 
             </td>
         </tr>

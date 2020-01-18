@@ -42,4 +42,8 @@ public class SupplierService {
         Supplier supplier = supplierDao.getSupplierById(id);
         return supplier;
     }
+
+    public int delete(int id){
+        return supplierDao.delete(id);
+    }
 }

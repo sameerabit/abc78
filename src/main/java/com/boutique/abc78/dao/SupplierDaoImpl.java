@@ -2,6 +2,7 @@ package com.boutique.abc78.dao;
 
 import com.boutique.abc78.model.Supplier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -60,5 +61,17 @@ public class SupplierDaoImpl implements SupplierDao {
         Supplier supplier = (Supplier) query.getSingleResult();
         em.close();
         return supplier;
+    }
+
+    @Override
+    @Transactional
+    public int delete(int id) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Supplier supplier = em.find(Supplier.class, id);
+        em.getTransaction().begin();
+        em.remove(supplier);
+        em.getTransaction().commit();
+        em.close();
+        return 1;
     }
 }

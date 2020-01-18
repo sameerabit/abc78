@@ -85,11 +85,11 @@ public class SaleDaoImpl implements SaleDao {
         em.getTransaction().begin();
         Sale sale = em.find(Sale.class, payment.getSale().getId());
         payment.setSale(sale);
-        sale.setPayment(payment);
         payment = em.merge(payment);
         em.getTransaction().commit();
         em.refresh(payment);
         em.close();
         return payment;
     }
+
 }

@@ -52,4 +52,11 @@ public class SupplierController {
         return  "supplier_list";
     }
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") Integer id,Model model){
+        int res = supplierService.delete(id);
+        return "redirect:/supplier/list/";
+
+    }
+
 }

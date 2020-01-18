@@ -19,7 +19,7 @@ public class Sale {
     @DateTimeFormat(pattern = "yy/mm/dd")
     private Date orderDate;
 
-    @OneToOne(mappedBy = "payment")
+    @OneToOne(mappedBy = "sale")
     private Payment payment;
 
     private float totalDiscount;

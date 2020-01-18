@@ -13,4 +13,7 @@ public interface SupplierDao {
     public Supplier save(Supplier supplier);
 
     public Supplier getSupplierById(int supplierId);
+
+    public int delete(int id);
+
 }

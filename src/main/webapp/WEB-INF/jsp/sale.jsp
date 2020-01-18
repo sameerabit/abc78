@@ -337,7 +337,12 @@
                     success: function (response) {
                         $('#totalBill').html("Rs."+response.success.total);
                         $('#sale_id').val(response.success.id);
-                        $('#paymentModal').modal('show');
+                        if(response.success.payment.id == null){
+                            $('#paymentModal').modal('show');
+                        }else{
+                            alert('Successfully Saved');
+                            window.location.reload('/');
+                        }
                     },
                     error: function(errors){
                         errors.responseJSON.errors.forEach(function(error){
