@@ -18,6 +18,7 @@ public class Expense {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
+    private Float amount;
 
     public Integer getId() {
         return id;
@@ -41,5 +42,13 @@ public class Expense {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Float amount) {
+        this.amount = amount;
     }
 }

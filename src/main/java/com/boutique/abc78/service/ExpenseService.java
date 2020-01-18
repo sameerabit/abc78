@@ -42,4 +42,13 @@ public class ExpenseService {
         Expense expense = expenseDao.getExpenseById(id);
         return expense;
     }
+
+    public int delete(int id){
+        return expenseDao.delete(id);
+    }
+
+    public List<Expense> getExpensesByDate(String date) {
+        List<Expense> expenses = expenseDao.getExpensesByDate(date);
+        return expenses;
+    }
 }

@@ -13,4 +13,8 @@ public interface ExpenseDao {
     public Expense save(Expense expense);
 
     public Expense getExpenseById(int supplierId);
+
+    public List<Expense> getExpensesByDate(String date);
+
+    public int delete(int id);
 }

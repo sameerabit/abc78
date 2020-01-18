@@ -12,16 +12,16 @@
         </div>
 
         <div class="card-body">
-            <form action="/item/list">
+            <form action="/expenses/list">
                 <div class="form-group row">
-                    <div class="col-sm-6 mx-auto">
-                        <input class="form-control" type="text" name="search">
-                    </div>
-                    <div class="col">
-                        <input type="submit" class="btn btn-info" value="Search">
-                    </div>
+                    <%--<div class="col-sm-6 mx-auto">--%>
+                        <%--<input class="form-control" type="text" name="search">--%>
+                    <%--</div>--%>
+                    <%--<div class="col">--%>
+                        <%--<input type="submit" class="btn btn-info" value="Search">--%>
+                    <%--</div>--%>
                     <div class="col text-right">
-                        <a href="/item/" class="btn btn-info" >New Expense</a>
+                        <a href="/expenses/" class="btn btn-info" >New Expense</a>
                     </div>
                 </div>
             </form>
@@ -30,6 +30,7 @@
     <tr>
         <th scope="col">Date</th>
         <th scope="col">Reason</th>
+        <th scope="col">Amount</th>
         <th></th>
     </tr>
     </thead>
@@ -38,6 +39,7 @@
         <tr>
             <td>${expense.date}</td>
             <td>${expense.name}</td>
+            <td>${expense.amount}</td>
             <td>
                 <a href="/expenses/show/${expense.id}">View</a>
                 <a href="/expenses/delete/${expense.id}">Delete</a>

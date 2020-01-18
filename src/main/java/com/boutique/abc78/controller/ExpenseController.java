@@ -52,4 +52,11 @@ public class ExpenseController {
         return  "expense_list";
     }
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") Integer id,Model model){
+        int res = expenseService.delete(id);
+        return "redirect:/expense/list/";
+
+    }
+
 }

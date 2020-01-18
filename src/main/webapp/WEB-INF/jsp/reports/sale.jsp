@@ -8,7 +8,7 @@
 <div class="container my-5">
     <div class="card">
         <div class="card-header">
-            Daily Sales Report
+            <h4>Daily Sales Report</h4>
         </div>
         <div class="card-body">
             <form action="/reports/daily_sale">
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </form>
-
+            <h5>Sales</h5>
             <table class="table m-auto">
                 <thead class="thead-light">
                 <tr>
@@ -61,6 +61,8 @@
                 </tbody>
             </table>
 
+            <h5>Returns</h5>
+
             <table class="table m-auto">
                 <thead class="thead-light">
                 <tr>
@@ -87,6 +89,59 @@
                 </tbody>
             </table>
 
+            <h5>Expenses</h5>
+
+
+            <div class="row">
+                <div class="col-6">
+                    <table class="table m-auto">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th  scope="col">Amount</th>
+                            <th scope="col">Reason</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${expenseList}" var="expense">
+                                <tr>
+                                    <td>${expense.id}</td>
+                                    <td>${expense.name}</td>
+                                    <td align="right">${expense.amount}</td>
+                                </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <h6>SUMMARY</h6>
+                    <hr>
+                    <div class="row">
+                        <div class="col-8 text-right"><h6>Sales :</h6></div>
+                        <div class="col-4 text-right">${totalSales}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 text-right"><h6> Total Sales Profit :</h6></div>
+                        <div class="col-4 text-right">${profit}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 text-right"><h6> Total Returns :</h6></div>
+                        <div class="col-4 text-right">${grnTotal}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 text-right"><h6> Total Expenses :</h6></div>
+                        <div class="col-4 text-right">${expTotal}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 text-right"><h6>Cash On Hand :</h6></div>
+                        <div class="col-4 text-right">${totalSales - (grnTotal+expTotal) }</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 text-right"><h5>Profit :</h5></div>
+                        <div class="col-4 text-right"><h5>${profit - (grnTotal+expTotal)}</h5></div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
