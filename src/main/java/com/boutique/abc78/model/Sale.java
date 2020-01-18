@@ -19,6 +19,9 @@ public class Sale {
     @DateTimeFormat(pattern = "yy/mm/dd")
     private Date orderDate;
 
+    @OneToOne(mappedBy = "payment")
+    private Payment payment;
+
     private float totalDiscount;
 
     private float total;
@@ -82,6 +85,14 @@ public class Sale {
 
     public void setTotal(float total) {
         this.total = total;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     @Override

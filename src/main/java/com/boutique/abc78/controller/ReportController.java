@@ -28,13 +28,16 @@ public class ReportController {
 
 
     @RequestMapping("/daily_sale")
-    public String index(Model model,@RequestParam(defaultValue="") String date){
+    public String index(Model model,@RequestParam(defaultValue="") String date,
+                        @RequestParam(defaultValue="") String startDate,
+                        @RequestParam(defaultValue="") String endDate
+                        ){
         if(date.isEmpty()){
             return "reports/sale";
         }
-        List<Sale> saleList = reportService.getDailySale(date);
-        List<GoodReturnNote> goodReturnNoteList = goodReturnService.getAllGoodReturnNotesByDate(date);
-        List<Expense> expenseList = expenseService.getExpensesByDate(date);
+        List<Sale> saleList = reportService.getDailySale(date,startDate,endDate);
+        List<GoodReturnNote> goodReturnNoteList = goodReturnService.getAllGoodReturnNotesByDate(date,startDate,endDate);
+        List<Expense> expenseList = expenseService.getExpensesByDate(date,startDate,endDate);
 
         float totalSales = 0;
         float profit = 0;
@@ -73,6 +76,54 @@ public class ReportController {
         model.addAttribute("expTotal",expTotal);
 
         return  "reports/sale";
+    }
+
+    @RequestMapping("/range_sale")
+    public String rangeSales(Model model,@RequestParam(defaultValue="") String date,
+                        @RequestParam(defaultValue="") String startDate,
+                        @RequestParam(defaultValue="") String endDate
+    ){
+        List<Sale> saleList = reportService.getDailySale(date,startDate,endDate);
+        List<GoodReturnNote> goodReturnNoteList = goodReturnService.getAllGoodReturnNotesByDate(date,startDate,endDate);
+        List<Expense> expenseList = expenseService.getExpensesByDate(date,startDate,endDate);
+
+        float totalSales = 0;
+        float profit = 0;
+        float totalDiscount = 0;
+        float grnTotal = 0;
+        float expTotal = 0;
+
+
+
+        for (Sale sale: saleList) {
+            for (SaleOrderDetail saleOrderDetail:sale.getSaleOrderDetail()) {
+                for (ItemBatch itemBatch:saleOrderDetail.getItemBatches()) {
+                    totalSales+= saleOrderDetail.getTotal();
+                    profit += saleOrderDetail.getTotal() - (itemBatch.getBuyingPrice()*saleOrderDetail.getQuantity());
+                }
+            }
+        }
+
+        for (GoodReturnNote goodReturnNote: goodReturnNoteList) {
+            for(GoodReturnNoteDetail goodReturnNoteDetail :goodReturnNote.getGoodReturnNoteDetails()){
+                grnTotal += goodReturnNoteDetail.getSellingPrice()*goodReturnNoteDetail.getQuantity();
+            }
+        }
+
+        for(Expense expense : expenseList){
+            expTotal += expense.getAmount();
+        }
+
+        model.addAttribute("saleList",saleList);
+        model.addAttribute("goodReturnNoteList",goodReturnNoteList);
+        model.addAttribute("expenseList",expenseList);
+        model.addAttribute("profit",profit);
+        model.addAttribute("totalSales",totalSales);
+        model.addAttribute("totalDiscount",totalDiscount);
+        model.addAttribute("grnTotal",grnTotal);
+        model.addAttribute("expTotal",expTotal);
+
+        return  "reports/dateWiseSales";
     }
 
 }

@@ -14,7 +14,7 @@ public interface ExpenseDao {
 
     public Expense getExpenseById(int supplierId);
 
-    public List<Expense> getExpensesByDate(String date);
+    public List<Expense> getExpensesByDate(String date,String startDate, String endDate);
 
     public int delete(int id);
 }

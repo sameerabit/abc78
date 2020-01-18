@@ -47,8 +47,8 @@ public class ExpenseService {
         return expenseDao.delete(id);
     }
 
-    public List<Expense> getExpensesByDate(String date) {
-        List<Expense> expenses = expenseDao.getExpensesByDate(date);
+    public List<Expense> getExpensesByDate(String date,String startDate, String endDate) {
+        List<Expense> expenses = expenseDao.getExpensesByDate(date,startDate,endDate);
         return expenses;
     }
 }

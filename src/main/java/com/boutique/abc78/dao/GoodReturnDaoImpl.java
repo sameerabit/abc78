@@ -79,18 +79,26 @@ public class GoodReturnDaoImpl implements GoodReturnDao {
 
     }
 
-    public List<GoodReturnNote>  getAllGoodReturnNotesByDate(String date){
+    public List<GoodReturnNote>  getAllGoodReturnNotesByDate(String date,String startDate, String eDate){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         Date rDate = null;
         Date endDate = null;
 
         try {
-            rDate = format.parse(date);
-            cal.setTime(rDate);
-            cal.add(Calendar.DAY_OF_MONTH, 1);
-            String newDate = format.format(cal.getTime());
-            endDate = format.parse(newDate);
+
+            if(!startDate.isEmpty() && !eDate.isEmpty()){
+                rDate = format.parse(startDate);
+                endDate = format.parse(eDate);
+            }else{
+                rDate = format.parse(date);
+                cal.setTime(rDate);
+                cal.add(Calendar.DAY_OF_MONTH, 1);
+                String newDate = format.format(cal.getTime());
+                endDate = format.parse(newDate);
+            }
+
+
         } catch (ParseException ex){
 
         }

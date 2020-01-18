@@ -11,7 +11,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne(targetEntity = Sale.class)
+    @OneToOne(targetEntity = Sale.class)
     private Sale sale;
 
     private Float cash;

@@ -15,8 +15,8 @@ public class ReportService {
     private ReportDaoImpl reportDao;
 
 
-    public List<Sale> getDailySale(String date){
-        return this.reportDao.dailySalesReport(date);
+    public List<Sale> getDailySale(String date,String startDate,String endDate){
+        return this.reportDao.dailySalesReport(date,startDate,endDate);
     }
 
 

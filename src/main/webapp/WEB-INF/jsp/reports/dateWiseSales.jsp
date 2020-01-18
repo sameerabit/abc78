@@ -37,10 +37,13 @@
             <h4>Daily Sales Report</h4>
         </div>
         <div class="card-body">
-            <form data-html2canvas-ignore="true" id="searchForm" action="/reports/daily_sale">
+            <form data-html2canvas-ignore="true" id="searchForm" action="/reports/range_sale">
                 <div class="form-group row">
-                    <div class="col-sm-6 mx-auto">
-                        <input class="form-control" type="date" name="date">
+                    <div class="col-sm-4 mx-auto">
+                        <input class="form-control" type="date" name="startDate">
+                    </div>
+                    <div class="col-sm-4 mx-auto">
+                        <input class="form-control" type="date" name="endDate">
                     </div>
                     <div class="col">
                         <input type="submit" class="btn btn-info" value="Search">
@@ -71,22 +74,22 @@
                 </thead>
                 <tbody>
                 <c:forEach items="${saleList}" var="sale">
-                <c:forEach items="${sale.saleOrderDetail}" var="item">
-                    <c:forEach items="${item.itemBatches}" var="batch">
-                    <tr>
-                        <td>${sale.id}</td>
-                        <td >${item.item.name}</td>
-                        <td align="right">${item.price}</td>
-                        <td align="right">${batch.buyingPrice}</td>
-                        <td align="right">${item.quantity}</td>
-                        <td align="right">${item.discount}</td>
-                        <td align="right">${item.total}</td>
-                        <td align="right">${(item.price - batch.buyingPrice)*item.quantity}</td>
+                    <c:forEach items="${sale.saleOrderDetail}" var="item">
+                        <c:forEach items="${item.itemBatches}" var="batch">
+                            <tr>
+                                <td>${sale.id}</td>
+                                <td >${item.item.name}</td>
+                                <td align="right">${item.price}</td>
+                                <td align="right">${batch.buyingPrice}</td>
+                                <td align="right">${item.quantity}</td>
+                                <td align="right">${item.discount}</td>
+                                <td align="right">${item.total}</td>
+                                <td align="right">${(item.price - batch.buyingPrice)*item.quantity}</td>
 
-                    </tr>
+                            </tr>
+                        </c:forEach>
+
                     </c:forEach>
-
-                </c:forEach>
                 </c:forEach>
                 </tbody>
             </table>
@@ -105,17 +108,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${goodReturnNoteList}" var="grn">
+                <c:forEach items="${goodReturnNoteList}" var="grn">
                     <c:forEach items="${grn.goodReturnNoteDetail}" var="grnDetail">
-                                <tr>
-                                    <td>${grn.id}</td>
-                                    <td>${grnDetail.item.name}</td>
-                                    <td align="right">${grnDetail.sellingPrice}</td>
-                                    <td align="right">${grnDetail.quantity}</td>
-                                    <td align="right">${grnDetail.sellingPrice*grnDetail.quantity}</td>
-                                </tr>
+                        <tr>
+                            <td>${grn.id}</td>
+                            <td>${grnDetail.item.name}</td>
+                            <td align="right">${grnDetail.sellingPrice}</td>
+                            <td align="right">${grnDetail.quantity}</td>
+                            <td align="right">${grnDetail.sellingPrice*grnDetail.quantity}</td>
+                        </tr>
                     </c:forEach>
-                    </c:forEach>
+                </c:forEach>
                 </tbody>
             </table>
 
@@ -134,11 +137,11 @@
                         </thead>
                         <tbody>
                         <c:forEach items="${expenseList}" var="expense">
-                                <tr>
-                                    <td>${expense.id}</td>
-                                    <td>${expense.name}</td>
-                                    <td align="right">${expense.amount}</td>
-                                </tr>
+                            <tr>
+                                <td>${expense.id}</td>
+                                <td>${expense.name}</td>
+                                <td align="right">${expense.amount}</td>
+                            </tr>
                         </c:forEach>
                         </tbody>
                     </table>

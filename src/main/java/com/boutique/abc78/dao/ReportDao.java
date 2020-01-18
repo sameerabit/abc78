@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ReportDao {
 
-    public List<Sale> dailySalesReport(String date);
+    public List<Sale> dailySalesReport(String date,String startDate, String endDate);
 
 }

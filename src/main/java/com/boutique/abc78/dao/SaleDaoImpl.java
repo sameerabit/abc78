@@ -83,6 +83,9 @@ public class SaleDaoImpl implements SaleDao {
     public Payment pay(Payment payment) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
+        Sale sale = em.find(Sale.class, payment.getSale().getId());
+        payment.setSale(sale);
+        sale.setPayment(payment);
         payment = em.merge(payment);
         em.getTransaction().commit();
         em.refresh(payment);

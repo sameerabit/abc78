@@ -29,9 +29,15 @@ public class SalesValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "orderDate", "Order Date is Required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "customer.id", "Customer is Required");
 
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"saleOrderDetail","Table is empty. Please add items.");
 //        if (itemCategory.getId() != null && itemCategoryService.getItemCatById(itemCategory.getId()) != null) {
 //            errors.rejectValue("name", "Duplicate.category.name");
 //        }
+
+        if(sale.getSaleOrderDetail().size() == 0){
+            errors.rejectValue("saleOrderDetail", "No Sale Order Details Found");
+        }
 
     }
 }

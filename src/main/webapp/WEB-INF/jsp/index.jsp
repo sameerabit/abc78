@@ -21,12 +21,10 @@
     <link rel="stylesheet" href="/webjars/font-awesome/3.2.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
     <script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/js/jspdf.min.js"></script>
+
 
     <style type="text/css">
-        a {
-            color: white;
-        }
-
         .error {
             color: red;
         }
@@ -123,6 +121,7 @@
                 <div class="dropdown-menu" aria-labelledby="reportLink">
                     <a class="dropdown-item" href="/reports/daily_sale">Daily Sales Report</a>
                     <a class="dropdown-item" href="/item/stock">Stock Report</a>
+                    <a class="dropdown-item" href="/reports/range_sale">Date Wise Sales Report</a>
                 </div>
             </li>
             <li class="nav-item">
