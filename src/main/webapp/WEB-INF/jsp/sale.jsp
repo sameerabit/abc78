@@ -8,6 +8,8 @@
         .ui-dialog {
             width: 600px !important;
         }
+
+
     </style>
     <script>
 
@@ -15,6 +17,25 @@
         var table;
         var selectedRow;
         $(function () {
+
+
+            $("form[name='paymentForm']").validate({
+                rules: {
+                    cash: {
+                        required:'#cashBtn:checked,#bothBtn:checked'
+                    },
+                    credit: {
+                        required:'#creditBtn:checked,#bothBtn:checked'
+                    },
+                    bank: {
+                        required:'#creditBtn:checked,#bothBtn:checked'
+                    },
+
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
 
             $("#orderDate").datepicker();
             $("#orderDate").datepicker("option", "dateFormat", "yy-mm-dd");
@@ -260,27 +281,29 @@
 
             $('#payButton').click(function(evt){
                 var $payment = $('#paymentForm');
-                var data = getFormData($payment);
-                var token = $('#_csrf_token').val();
-                var header = "X-CSRF-TOKEN";
-                data.sale = {
-                    id : data.sale_id
+                if($('#paymentForm').valid()) {
+                    var data = getFormData($payment);
+                    var token = $('#_csrf_token').val();
+                    var header = "X-CSRF-TOKEN";
+                    data.sale = {
+                        id: data.sale_id
+                    }
+                    $.ajax({
+                        headers: {
+                            "X-CSRF-TOKEN": token
+                        },
+                        type: "POST",
+                        url: "/api/sale/pay",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: 'json',
+                        data: JSON.stringify(data),
+                        success: function (response) {
+                            var retVal = alert("Payment Successfull");
+                            $('.buttons-print').click();
+                            window.location.reload('/');
+                        },
+                    });
                 }
-                $.ajax({
-                    headers: {
-                        "X-CSRF-TOKEN":token
-                    },
-                    type: "POST",
-                    url: "/api/sale/pay",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: 'json',
-                    data: JSON.stringify(data),
-                    success: function (response) {
-                        var retVal = alert("Payment Successfull");
-                        $('.buttons-print').click();
-                        window.location.reload('/');
-                    },
-                });
             });
 
             $('#saveButton').click(function (event) {
@@ -291,7 +314,7 @@
                 customer = $('#customer').val();
                 orderDate = $('#orderDate').val();
                 var postdata = {};
-                postdata.sale = {
+                postdata = {
                     id: saleId,
                     customer: {
                         id: customer
@@ -312,10 +335,17 @@
                     dataType: 'json',
                     data: JSON.stringify(postdata),
                     success: function (response) {
-                        $('#totalBill').val(response.total);
-                        $('#sale_id').val(response.id);
+                        $('#totalBill').html("Rs."+response.success.total);
+                        $('#sale_id').val(response.success.id);
                         $('#paymentModal').modal('show');
                     },
+                    error: function(errors){
+                        errors.responseJSON.errors.forEach(function(error){
+                            $('#errors').append(
+                                "<p class='text-danger'> * "+ error.code+ "</p>"
+                            );
+                        });
+                    }
                 });
             });
 
@@ -355,7 +385,9 @@
     </form>
     </div>
     <div class="container mt-3">
-
+        <div class="row">
+            <div class="col" id="errors"></div>
+        </div>
         <div class="row">
             <div class="offset-4 col text-center">
                 <h3>Sales Order</h3>
@@ -428,30 +460,31 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Pay Bill</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Pay Bill : <span id="totalBill"></span></h5>
+
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="paymentForm">
+                    <form id="paymentForm" name="paymentForm">
                         <div class="form-group">
                             <legend class="col-form-label col-sm-2 pt-0">Method</legend>
                             <div class="col-sm-10">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="method" id="cash" value="cash" checked>
+                                    <input class="form-check-input" type="radio" name="method" id="cashBtn" value="cash" checked>
                                     <label class="form-check-label" for="cash">
                                         Cash
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="method" id="credit" value="credit">
+                                    <input class="form-check-input" type="radio" name="method" id="creditBtn" value="credit">
                                     <label class="form-check-label" for="credit">
                                         Credit
                                     </label>
                                 </div>
                                 <div class="form-check disabled">
-                                    <input class="form-check-input" type="radio" name="method" id="both" value="both">
+                                    <input class="form-check-input" type="radio" name="method" id="bothBtn" value="both">
                                     <label class="form-check-label" for="both">
                                         Cash & Credit
                                     </label>
@@ -476,7 +509,6 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <span class="h5" id="totalBill"></span>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button id="payButton" type="button" class="btn btn-primary">Pay</button>
                 </div>
