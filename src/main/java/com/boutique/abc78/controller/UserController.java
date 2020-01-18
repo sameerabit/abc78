@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -71,6 +72,7 @@ public class UserController {
 
     @RequestMapping("/users")
     public String getAllItems(Model model){
+        List<Role> role = userService.getRoles();
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
         return  "users";
@@ -85,8 +87,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/edit/{username}", method = RequestMethod.GET)
-    public String show(@PathVariable("username") String username,Model model){
+    public String show(@PathVariable("username") String username, Model model, RedirectAttributes redirectAttributes){
         User user = userService.findByUsername(username);
+        if(user.getRole().getName() != "admin"){
+            redirectAttributes.addFlashAttribute("SUCCESS_MESSAGE","You don't have permission to view this.");
+            return "redirect:/";
+        }
         List<Role> roles = userService.getRoles();
         model.addAttribute("roles",roles);
         model.addAttribute("userForm", user);

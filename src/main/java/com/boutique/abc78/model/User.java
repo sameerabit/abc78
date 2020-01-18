@@ -17,7 +17,7 @@ public class User {
     @Transient
     private String passwordConfirm;
 
-    @ManyToOne(fetch = FetchType.LAZY,targetEntity = Role.class)
+    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Role.class)
     private Role role;
 
     public Long getId() {
