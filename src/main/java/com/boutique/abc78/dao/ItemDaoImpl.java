@@ -30,9 +30,12 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public List<Item> getAllItemsForReport() {
+    public List<Item> getAllItemsForReport(String search) {
         EntityManager em = entityManagerFactory.createEntityManager();
-        List itemList = em.createQuery("SELECT c,sum(ib.quantity) FROM Item c INNER JOIN ItemBatch ib ON ib.item.id = c.id group by c.id").getResultList();
+        Query query = em.createQuery("SELECT c,sum(ib.quantity) FROM Item c" +
+                " INNER JOIN ItemBatch ib ON ib.item.id = c.id where c.name like :search group by c.id");
+        query.setParameter("search", "%" + search + "%");
+        List<Item> itemList = query.getResultList();
         em.close();
         return itemList;
     }

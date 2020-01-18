@@ -23,15 +23,19 @@
 
 
     <style type="text/css">
-        h5 a {
-            color: black !important;
+        a {
+            color: white;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: white;
         }
     </style>
 </head>
 
 <body>
 <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">ABC78 BOTIQUES</a>
+    <a class="navbar-brand" href="#">ABC<span class="bg-danger">78</span> BOTIQUES</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -106,6 +110,15 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="/user">Create</a>
                     <a class="dropdown-item" href="/users">View</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="reportLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    REPORTS
+                </a>
+                <div class="dropdown-menu" aria-labelledby="reportLink">
+                    <a class="dropdown-item" href="/reports/daily_sale">Daily Sales Report</a>
+                    <a class="dropdown-item" href="/item/stock">Stock Report</a>
                 </div>
             </li>
             <li class="nav-item">

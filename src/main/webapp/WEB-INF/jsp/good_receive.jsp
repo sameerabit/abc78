@@ -255,7 +255,8 @@
                     dataType: 'json',
                     data: JSON.stringify(postdata),
                     success: function (response) {
-                            $('.alert').show();
+                        alert("Stock is updated Successfully");
+                        window.location.reload('/');
                     },
                 });
             });
@@ -289,7 +290,7 @@
 </div>
 <div class="container mt-3">
     <div class="row">
-        <div class="col text-center">
+        <div class="col bg-light mb-2 text-center my-5">
             <h3>Good Receive Note</h3>
         </div>
     </div>

@@ -9,11 +9,11 @@
     <div class="card">
         <div class="card-header">
             Good Receive Notes
-            <a href="/category/" class="btn btn-info pull-right" >Add New Order</a>
+            <a href="/grn/" class="btn btn-info pull-right" >Add New Order</a>
 
         </div>
         <div class="card-body">
-            <form action="/category/list">
+            <form action="/grn/list">
                 <div class="form-group row">
                     <dov class="col-1">
                         <lable>Start</lable>

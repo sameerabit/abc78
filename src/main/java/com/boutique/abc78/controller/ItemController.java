@@ -43,8 +43,8 @@ public class ItemController {
     }
 
     @RequestMapping("/stock")
-    public String getAllItemsForReport(Model model){
-        List items = itemService.getAllItemsForReport();
+    public String getAllItemsForReport(Model model, @RequestParam(defaultValue="") String search){
+        List items = itemService.getAllItemsForReport(search);
         model.addAttribute("items", items);
         return "stock";
     }
@@ -58,12 +58,14 @@ public class ItemController {
     }
 
     @RequestMapping(value="/save", method=RequestMethod.POST)
-    public String save(@Valid @ModelAttribute("item")Item item, BindingResult bindingResult){
+    public String save(@Valid @ModelAttribute("item")Item item, BindingResult bindingResult,Model model){
         itemValidator.validate(item, bindingResult);
-        itemService.save(item);
         if (bindingResult.hasErrors()) {
-            return  "redirect:/item/";
+            List<ItemCategory> allCategories = itemCategoryService.getAllCategories("");
+            model.addAttribute("itemCategories",allCategories);
+            return  "item";
         }
+        itemService.save(item);
         return "redirect:/item/show/"+item.getId();
     }
 

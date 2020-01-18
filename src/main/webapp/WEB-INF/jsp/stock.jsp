@@ -11,7 +11,7 @@
             Item Stock Report
         </div>
         <div class="card-body">
-            <form action="/item/list">
+            <form action="/item/stock">
                 <div class="form-group row">
                     <div class="col-sm-6 mx-auto">
                         <input class="form-control" type="text" name="search">

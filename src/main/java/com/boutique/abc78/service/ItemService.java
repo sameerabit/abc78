@@ -53,8 +53,8 @@ public class ItemService {
         return itemDao.delete(id);
     }
 
-    public List getAllItemsForReport() {
-        return itemDao.getAllItemsForReport();
+    public List getAllItemsForReport(String search) {
+        return itemDao.getAllItemsForReport(search);
     }
 
 }
