@@ -52,5 +52,8 @@ public class GoodReturnService {
         this.goodReturnDao.removeGoodReturnNoteDetails(grnId);
     }
 
+    public List<GoodReturnNote> getAllGoodReturnNotesByDate(String date){
+        return this.goodReturnDao.getAllGoodReturnNotesByDate(date);
+    }
 
 }

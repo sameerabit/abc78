@@ -28,12 +28,14 @@
             <table class="table m-auto">
                 <thead class="thead-light">
                 <tr>
+                    <th scope="col">Sale No</th>
                     <th scope="col">Name</th>
                     <th scope="col">Selling Price</th>
                     <th scope="col">Buying Price</th>
                     <th scope="col">Quantity</th>
-                    <th scope="col">Total</th>
                     <th scope="col">Discount</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Profit</th>
 
                 </tr>
                 </thead>
@@ -42,12 +44,15 @@
                 <c:forEach items="${sale.saleOrderDetail}" var="item">
                     <c:forEach items="${item.itemBatches}" var="batch">
                     <tr>
-                        <td>${item.item.name}</td>
-                        <td>${item.price}</td>
-                        <td>${batch.buyingPrice}</td>
-                        <td>${item.quantity}</td>
-                        <td>${item.total}</td>
-                        <td>${item.discount}</td>
+                        <td>${sale.id}</td>
+                        <td >${item.item.name}</td>
+                        <td align="right">${item.price}</td>
+                        <td align="right">${batch.buyingPrice}</td>
+                        <td align="right">${item.quantity}</td>
+                        <td align="right">${item.discount}</td>
+                        <td align="right">${item.total}</td>
+                        <td align="right">${(item.price - batch.buyingPrice)*item.quantity}</td>
+
                     </tr>
                     </c:forEach>
 
@@ -55,6 +60,34 @@
                 </c:forEach>
                 </tbody>
             </table>
+
+            <table class="table m-auto">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th  scope="col">Selling Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${goodReturnNoteList}" var="grn">
+                    <c:forEach items="${grn.goodReturnNoteDetail}" var="grnDetail">
+                                <tr>
+                                    <td>${grn.id}</td>
+                                    <td>${grnDetail.item.name}</td>
+                                    <td align="right">${grnDetail.sellingPrice}</td>
+                                    <td align="right">${grnDetail.quantity}</td>
+                                    <td align="right">${grnDetail.sellingPrice*grnDetail.quantity}</td>
+                                </tr>
+                    </c:forEach>
+                    </c:forEach>
+                </tbody>
+            </table>
+
+
         </div>
 
     </div>

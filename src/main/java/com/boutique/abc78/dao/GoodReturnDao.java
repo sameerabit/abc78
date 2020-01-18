@@ -16,4 +16,6 @@ public interface GoodReturnDao {
     void removeGoodReturnNoteDetails(Integer grnId);
 
     void deleteGoodReturnNote(Integer grnId);
+
+    List<GoodReturnNote> getAllGoodReturnNotesByDate(String date);
 }
