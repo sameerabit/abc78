@@ -9,6 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,9 +37,25 @@ public class GoodReceiveDaoImpl implements GoodReceiveDao {
     }
 
     @Override
-    public List<GoodReceiveNote> getAllGoodReceiveNotes() {
+    public List<GoodReceiveNote> getAllGoodReceiveNotes(String start,String end) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        Date rDate = null;
+        Date endDate = null;
+
+        try {
+            if(!start.isEmpty() && !end.isEmpty()){
+                rDate = format.parse(start);
+                endDate = format.parse(end);
+            }
+        } catch (ParseException ex){
+
+        }
         EntityManager em = entityManagerFactory.createEntityManager();
-        List<GoodReceiveNote> goodReceiveNoteList = em.createQuery("SELECT g FROM GoodReceiveNote g order by g.id desc").getResultList();
+        Query query = em.createQuery("SELECT g FROM GoodReceiveNote g where g.orderDate between :startDate and :endDate order by g.id desc");
+        query.setParameter("startDate", rDate);
+        query.setParameter("endDate", endDate);
+        List<GoodReceiveNote> goodReceiveNoteList = query.getResultList();
         em.close();
         return goodReceiveNoteList;
     }

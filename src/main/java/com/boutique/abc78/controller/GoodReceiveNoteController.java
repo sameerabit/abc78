@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -32,8 +33,9 @@ public class GoodReceiveNoteController {
     }
 
     @RequestMapping("/list")
-    public String getAllSales(Model model){
-        List<GoodReceiveNote> allGoodReceiveNotes = goodReceiveService.getAllGoodReceiveNotes();
+    public String getAllSales(Model model,@RequestParam(defaultValue="") String start,
+                              @RequestParam(defaultValue="") String end){
+        List<GoodReceiveNote> allGoodReceiveNotes = goodReceiveService.getAllGoodReceiveNotes(start,end);
         model.addAttribute("goodReceiveNoteList", allGoodReceiveNotes);
         return  "good_receive_list";
     }

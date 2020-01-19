@@ -19,13 +19,13 @@
                         <lable>Start</lable>
                     </dov>
                     <div class="col-4">
-                        <input class="form-control"  type="date" placeholder="Start" >
+                        <input class="form-control" name="start"  type="date" placeholder="Start" >
                     </div>
                     <dov class="col-1">
                         <lable>End</lable>
                     </dov>
                     <div class="col-4">
-                        <input class="form-control"  type="date" placeholder="End" >
+                        <input class="form-control" name="end"  type="date" placeholder="End" >
                     </div>
                     <div class="col-2">
                         <input type="submit" class="btn btn-info" value="Search">

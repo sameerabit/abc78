@@ -35,8 +35,8 @@ public class GoodReceiveService {
         return goodReceiveNote;
     }
 
-    public List<GoodReceiveNote> getAllGoodReceiveNotes(){
-        return this.goodReceiveDao.getAllGoodReceiveNotes();
+    public List<GoodReceiveNote> getAllGoodReceiveNotes(String start,String end){
+        return this.goodReceiveDao.getAllGoodReceiveNotes(start,end);
     }
 
     public GoodReceiveNote getGoodReceiveNote(Integer saleId){

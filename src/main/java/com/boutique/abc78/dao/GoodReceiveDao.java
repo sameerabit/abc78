@@ -9,7 +9,7 @@ public interface GoodReceiveDao {
 
     GoodReceiveNote save(GoodReceiveNote goodReceiveNote);
 
-    List<GoodReceiveNote> getAllGoodReceiveNotes();
+    List<GoodReceiveNote> getAllGoodReceiveNotes(String start,String end);
 
     GoodReceiveNote getGoodReceiveNote(Integer grnId);
 
