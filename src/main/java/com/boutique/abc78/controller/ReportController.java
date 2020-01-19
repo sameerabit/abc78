@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping(value = "/reports")
@@ -35,7 +36,7 @@ public class ReportController {
         if(date.isEmpty()){
             return "reports/sale";
         }
-        List<Sale> saleList = reportService.getDailySale(date,startDate,endDate);
+        List<SaleBatch> saleBatches = reportService.getDailySale(date,startDate,endDate);
         List<GoodReturnNote> goodReturnNoteList = goodReturnService.getAllGoodReturnNotesByDate(date,startDate,endDate);
         List<Expense> expenseList = expenseService.getExpensesByDate(date,startDate,endDate);
 
@@ -47,13 +48,9 @@ public class ReportController {
 
 
 
-        for (Sale sale: saleList) {
-            for (SaleOrderDetail saleOrderDetail:sale.getSaleOrderDetail()) {
-                for (ItemBatch itemBatch:saleOrderDetail.getItemBatches()) {
-                    totalSales+= saleOrderDetail.getTotal();
-                    profit += saleOrderDetail.getTotal() - (itemBatch.getBuyingPrice()*saleOrderDetail.getQuantity());
-                }
-            }
+        for (SaleBatch saleBatch: saleBatches) {
+            totalSales+= saleBatch.getSaleOrderDetail().getPrice() * saleBatch.getQuantity();
+            profit += (saleBatch.getSaleOrderDetail().getPrice() - saleBatch.getItemBatch().getBuyingPrice())*saleBatch.getQuantity();
         }
 
         for (GoodReturnNote goodReturnNote: goodReturnNoteList) {
@@ -66,7 +63,7 @@ public class ReportController {
             expTotal += expense.getAmount();
         }
 
-        model.addAttribute("saleList",saleList);
+        model.addAttribute("saleBatches",saleBatches);
         model.addAttribute("goodReturnNoteList",goodReturnNoteList);
         model.addAttribute("expenseList",expenseList);
         model.addAttribute("profit",profit);
@@ -83,7 +80,7 @@ public class ReportController {
                         @RequestParam(defaultValue="") String startDate,
                         @RequestParam(defaultValue="") String endDate
     ){
-        List<Sale> saleList = reportService.getDailySale(date,startDate,endDate);
+        List<SaleBatch> saleBatches = reportService.getDailySale(date,startDate,endDate);
         List<GoodReturnNote> goodReturnNoteList = goodReturnService.getAllGoodReturnNotesByDate(date,startDate,endDate);
         List<Expense> expenseList = expenseService.getExpensesByDate(date,startDate,endDate);
 
@@ -95,13 +92,9 @@ public class ReportController {
 
 
 
-        for (Sale sale: saleList) {
-            for (SaleOrderDetail saleOrderDetail:sale.getSaleOrderDetail()) {
-                for (ItemBatch itemBatch:saleOrderDetail.getItemBatches()) {
-                    totalSales+= saleOrderDetail.getTotal();
-                    profit += saleOrderDetail.getTotal() - (itemBatch.getBuyingPrice()*saleOrderDetail.getQuantity());
-                }
-            }
+        for (SaleBatch saleBatch: saleBatches) {
+            totalSales+= saleBatch.getSaleOrderDetail().getPrice() * saleBatch.getQuantity();
+            profit += (saleBatch.getSaleOrderDetail().getPrice() - saleBatch.getItemBatch().getBuyingPrice())*saleBatch.getQuantity();
         }
 
         for (GoodReturnNote goodReturnNote: goodReturnNoteList) {
@@ -114,7 +107,7 @@ public class ReportController {
             expTotal += expense.getAmount();
         }
 
-        model.addAttribute("saleList",saleList);
+        model.addAttribute("saleBatches",saleBatches);
         model.addAttribute("goodReturnNoteList",goodReturnNoteList);
         model.addAttribute("expenseList",expenseList);
         model.addAttribute("profit",profit);

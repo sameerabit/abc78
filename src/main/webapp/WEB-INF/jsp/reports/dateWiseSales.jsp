@@ -66,30 +66,23 @@
                     <th scope="col">Selling Price</th>
                     <th scope="col">Buying Price</th>
                     <th scope="col">Quantity</th>
-                    <th scope="col">Discount</th>
                     <th scope="col">Total</th>
                     <th scope="col">Profit</th>
 
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${saleList}" var="sale">
-                    <c:forEach items="${sale.saleOrderDetail}" var="item">
-                        <c:forEach items="${item.itemBatches}" var="batch">
-                            <tr>
-                                <td>${sale.id}</td>
-                                <td >${item.item.name}</td>
-                                <td align="right">${item.price}</td>
-                                <td align="right">${batch.buyingPrice}</td>
-                                <td align="right">${item.quantity}</td>
-                                <td align="right">${item.discount}</td>
-                                <td align="right">${item.total}</td>
-                                <td align="right">${(item.price - batch.buyingPrice)*item.quantity}</td>
+                <c:forEach items="${saleBatches}" var="saleBatch">
+                    <tr>
+                        <td>${saleBatch.saleOrderDetail.sale.id}</td>
+                        <td >${saleBatch.itemBatch.item.name}</td>
+                        <td align="right">${saleBatch.saleOrderDetail.price}</td>
+                        <td align="right">${saleBatch.itemBatch.buyingPrice}</td>
+                        <td align="right">${saleBatch.quantity}</td>
+                        <td align="right">${saleBatch.saleOrderDetail.price * saleBatch.quantity}</td>
+                        <td align="right">${(saleBatch.saleOrderDetail.price - saleBatch.itemBatch.buyingPrice)*saleBatch.quantity}</td>
 
-                            </tr>
-                        </c:forEach>
-
-                    </c:forEach>
+                    </tr>
                 </c:forEach>
                 </tbody>
             </table>

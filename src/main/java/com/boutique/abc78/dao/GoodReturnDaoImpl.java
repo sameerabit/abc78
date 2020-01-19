@@ -35,11 +35,27 @@ public class GoodReturnDaoImpl implements GoodReturnDao {
     }
 
     @Override
-    public List<GoodReturnNote> getAllGoodReturnNotes() {
+    public List<GoodReturnNote> getAllGoodReturnNotes(String start,String end) {
         EntityManager em = entityManagerFactory.createEntityManager();
-        List<GoodReturnNote> goodReturnNoteList = em.createQuery("SELECT g FROM GoodReturnNote g order by g.id desc").getResultList();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        Date rDate = null;
+        Date endDate = null;
+
+        try {
+            if(!start.isEmpty() && !end.isEmpty()){
+                rDate = format.parse(start);
+                endDate = format.parse(end);
+            }
+        } catch (ParseException ex){
+
+        }
+        Query query = em.createQuery("SELECT s FROM GoodReturnNote s where s.returnDate between :startDate and :endDate");
+        query.setParameter("startDate", rDate);
+        query.setParameter("endDate", endDate);
+        List<GoodReturnNote> grnList = query.getResultList();
         em.close();
-        return goodReturnNoteList;
+        return grnList;
     }
 
     @Override

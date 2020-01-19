@@ -2,6 +2,7 @@ package com.boutique.abc78.dao;
 
 import com.boutique.abc78.model.Item;
 import com.boutique.abc78.model.ItemBatch;
+import com.boutique.abc78.model.SaleBatch;
 import com.boutique.abc78.model.SaleOrderDetail;
 import org.springframework.stereotype.Service;
 
@@ -48,28 +49,32 @@ public class ItemBatchDaoImpl implements ItemBatchDao {
     public void reduceQuantityForSales(SaleOrderDetail saleOrderDetail) {
         List<ItemBatch> itemBatches = this.getItemBatchByItemId(saleOrderDetail.getItem().getId());
         EntityManager em = entityManagerFactory.createEntityManager();
-        Set<ItemBatch> itemBatchSet = new HashSet<>();
+
         em.getTransaction().begin();
         float zero = 0;
         float remainingQty = saleOrderDetail.getQuantity();
         for (ItemBatch itemBatch: itemBatches) {
+            SaleBatch saleBatch = new SaleBatch();
             if (itemBatch.getQuantity() != 0){
                 if(itemBatch.getQuantity() >= remainingQty){
-                    itemBatch.setQuantity(itemBatch.getQuantity() - saleOrderDetail.getQuantity());
+                    saleBatch.setQuantity(remainingQty);
+                    itemBatch.setQuantity(itemBatch.getQuantity() - remainingQty);
                     remainingQty = 0;
                 } else {
-
                     float currentQty = itemBatch.getQuantity();
+                    saleBatch.setQuantity(currentQty);
+
                     itemBatch.setQuantity(zero);
-                    remainingQty = saleOrderDetail.getQuantity() - currentQty;
+                    remainingQty = remainingQty - currentQty;
                 }
             }
-            itemBatchSet.add(itemBatch);
-            em.merge(itemBatch);
 
+            saleBatch.setItemBatch(itemBatch);
+            saleBatch.setSaleOrderDetail(saleOrderDetail);
+            em.merge(itemBatch);
+            em.merge(saleBatch);
         }
-        saleOrderDetail.setItemBatches(itemBatchSet);
-        em.merge(saleOrderDetail);
+
         em.getTransaction().commit();
         em.close();
     }

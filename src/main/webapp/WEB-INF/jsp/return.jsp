@@ -149,12 +149,12 @@
                 "columnDefs": [
                     {
                         "targets": [4],
-                        "visible": true,
+                        "visible": false,
                         "searchable": false
                     },
                     {
                         "targets": [5],
-                        "visible": true,
+                        "visible": false,
                         "searchable": false
                     },
                     {

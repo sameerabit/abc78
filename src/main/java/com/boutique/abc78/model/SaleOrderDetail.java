@@ -23,14 +23,14 @@ public class SaleOrderDetail {
     private Item item;
 
 
-    @ManyToMany(fetch=FetchType.LAZY)
-    @JsonIgnore
-    @JoinTable(
-            name = "sales_batches",
-            joinColumns = { @JoinColumn(name = "item_batch_id") },
-            inverseJoinColumns = { @JoinColumn(name = "sale_order_detail_id") }
-    )
-    private Set<ItemBatch> itemBatches = new HashSet<>();
+    @OneToMany(mappedBy = "saleOrderDetail")
+//    @JsonIgnore
+//    @JoinTable(
+//            name = "sales_batches",
+//            joinColumns = { @JoinColumn(name = "item_batch_id") },
+//            inverseJoinColumns = { @JoinColumn(name = "sale_order_detail_id") }
+//    )
+    private Set<SaleBatch> saleBatchSet = new HashSet<>();
 
     private Float price;
 
@@ -107,11 +107,11 @@ public class SaleOrderDetail {
         this.returned = returned;
     }
 
-    public Set<ItemBatch> getItemBatches() {
-        return itemBatches;
+    public Set<SaleBatch> getSaleBatchSet() {
+        return saleBatchSet;
     }
 
-    public void setItemBatches(Set<ItemBatch> itemBatches) {
-        this.itemBatches = itemBatches;
+    public void setSaleBatchSet(Set<SaleBatch> saleBatchSet) {
+        this.saleBatchSet = saleBatchSet;
     }
 }

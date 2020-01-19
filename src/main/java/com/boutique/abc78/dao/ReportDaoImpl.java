@@ -1,6 +1,7 @@
 package com.boutique.abc78.dao;
 
 import com.boutique.abc78.model.Sale;
+import com.boutique.abc78.model.SaleBatch;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class ReportDaoImpl implements ReportDao {
     }
 
 
-    public List<Sale> dailySalesReport(String date,String startDate,String eDate){
+    public List<SaleBatch> dailySalesReport(String date,String startDate,String eDate){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         Date rDate = null;
@@ -47,12 +48,15 @@ public class ReportDaoImpl implements ReportDao {
 
         }
         EntityManager em = entityManagerFactory.createEntityManager();
-        Query query = em.createQuery("SELECT s FROM Sale s where s.orderDate between :startDate and :endDate");
+//        Query query = em.createQuery("SELECT s FROM Sale s where s.orderDate between :startDate and :endDate");
+        Query query = em.createQuery("SELECT sb FROM SaleBatch sb, SaleOrderDetail sod, Sale s where sb.saleOrderDetail = sod and sod.sale = s and s.orderDate between :startDate and :endDate");
+
+
         query.setParameter("startDate", rDate);
         query.setParameter("endDate", endDate);
-        List<Sale> saleList = query.getResultList();
+        List<SaleBatch> saleBatches = query.getResultList();
         em.close();
-        return saleList;
+        return saleBatches;
 
     }
 

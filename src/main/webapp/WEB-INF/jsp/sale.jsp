@@ -337,7 +337,7 @@
                     success: function (response) {
                         $('#totalBill').html("Rs."+response.success.total);
                         $('#sale_id').val(response.success.id);
-                        if(response.success.payment.id == null){
+                        if(response.success.payment == null){
                             $('#paymentModal').modal('show');
                         }else{
                             alert('Successfully Saved');

@@ -67,8 +67,9 @@ public class SaleController {
     }
 
     @RequestMapping("/return_list")
-    public String getAllGoodReturnNotes(Model model){
-        List<GoodReturnNote> allReturns = goodReturnService.getAllGoodReturnNotes();
+    public String getAllGoodReturnNotes(Model model,@RequestParam(defaultValue="") String start,
+                                        @RequestParam(defaultValue="") String end){
+        List<GoodReturnNote> allReturns = goodReturnService.getAllGoodReturnNotes(start,end);
         model.addAttribute("returnList", allReturns);
         return  "return_list";
     }

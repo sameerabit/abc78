@@ -155,12 +155,12 @@
                 "columnDefs": [
                     {
                         "targets": [6],
-                        "visible": true,
+                        "visible": false,
                         "searchable": false
                     },
                     {
                         "targets": [7],
-                        "visible": true,
+                        "visible": false,
                         "searchable": false
                     },
                     {
@@ -303,7 +303,7 @@
 
         </div>
         <div class="form-group row">
-            <label class="col-4 col-form-label" for="price">Price : </label>
+           <%--<label class="col-4 col-form-label" for="price">Price : </label>--%>
             <input class="form-control col-8" id="price" type="hidden"/>
         </div>
         <div class="form-group row">
@@ -311,7 +311,7 @@
             <input disabled class="form-control col-8" id="qty" type="number"/>
         </div>
         <div class="form-group row">
-            <label class="col-4 col-form-label" for="discount">Discount : </label>
+            <%--<label class="col-4 col-form-label" for="discount">Discount : </label>--%>
             <input class="form-control col-8" id="discount" type="hidden"/>
         </div>
         <div class="form-group row">

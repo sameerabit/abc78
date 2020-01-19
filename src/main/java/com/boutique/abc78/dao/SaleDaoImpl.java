@@ -32,6 +32,7 @@ public class SaleDaoImpl implements SaleDao {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
         sale = em.merge(sale);
+        sale = em.find(Sale.class, sale.getId());
         em.getTransaction().commit();
         em.refresh(sale);
         em.close();
@@ -83,8 +84,8 @@ public class SaleDaoImpl implements SaleDao {
     public Payment pay(Payment payment) {
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
-        Sale sale = em.find(Sale.class, payment.getSale().getId());
-        payment.setSale(sale);
+       // Sale sale = em.find(Sale.class, payment.getSale().getId());
+        payment.setSale(payment.getSale());
         payment = em.merge(payment);
         em.getTransaction().commit();
         em.refresh(payment);

@@ -26,6 +26,7 @@
             <label class="col-sm-2 col-form-label" for="supplier">Name :</label>
             <div class="col-sm-10">
                 <form:input type="text" class="form-control" id="supplier_name" path="name"/>
+                <form:errors cssClass="text-danger" path="name"></form:errors>
                 <form:input type="hidden" class="form-control" id="supplier" path="id"/>
             </div>
         </div>

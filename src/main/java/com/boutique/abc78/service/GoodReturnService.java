@@ -36,8 +36,8 @@ public class GoodReturnService {
         return goodReturnNote;
     }
 
-    public List<GoodReturnNote> getAllGoodReturnNotes(){
-        return this.goodReturnDao.getAllGoodReturnNotes();
+    public List<GoodReturnNote> getAllGoodReturnNotes(String start,String end){
+        return this.goodReturnDao.getAllGoodReturnNotes(start,end);
     }
 
     public GoodReturnNote getGoodReturnNote(Integer saleId){

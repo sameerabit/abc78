@@ -32,15 +32,15 @@ public class ItemBatch {
     @DateTimeFormat(pattern = "yy/mm/dd")
     private Date date;
 
-    @ManyToMany(mappedBy = "itemBatches")
-    Set<SaleOrderDetail> saleOrderDetails = new HashSet<>();
+    @OneToMany(mappedBy = "itemBatch")
+    Set<SaleBatch> saleBatchSet = new HashSet<>();
 
-    public Set<SaleOrderDetail> getSaleOrderDetails() {
-        return saleOrderDetails;
+    public Set<SaleBatch> getSaleBatchSet() {
+        return saleBatchSet;
     }
 
-    public void setSaleOrderDetails(Set<SaleOrderDetail> saleOrderDetails) {
-        this.saleOrderDetails = saleOrderDetails;
+    public void setSaleBatchSet(Set<SaleBatch> saleBatchSet) {
+        this.saleBatchSet = saleBatchSet;
     }
 
     public Integer getId() {
