@@ -55,6 +55,7 @@ public class ReportDaoImpl implements ReportDao {
         query.setParameter("startDate", rDate);
         query.setParameter("endDate", endDate);
         List<SaleBatch> saleBatches = query.getResultList();
+
         em.close();
         return saleBatches;
 
